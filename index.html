@@ -1,0 +1,775 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>kjk의 경기규칙 IFAB Q&A - 12조 반칙</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* For Webkit browsers like Chrome, Safari */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #1e293b; /* slate-800 */
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #4f46e5; /* indigo-600 */
+            border-radius: 10px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #6366f1; /* indigo-500 */
+        }
+    </style>
+</head>
+<body class="bg-slate-900 text-slate-200 font-sans">
+
+    <div class="container mx-auto p-4 md:p-8">
+        <!-- Header -->
+        <header class="text-center mb-8 md:mb-12">
+            <h1 class="text-4xl md:text-5xl font-bold text-cyan-400 drop-shadow-[0_2px_2px_rgba(0,255,255,0.4)] mb-2">
+                ⚽ kjk의 경기규칙 IFAB Q&A
+            </h1>
+            <h2 class="text-2xl md:text-3xl font-semibold text-indigo-400">
+                📜 12조 반칙 (Fouls and Misconduct)
+            </h2>
+            <p class="text-slate-400 mt-2">미래의 국제 심판을 위한 학습 대시보드</p>
+        </header>
+
+        <!-- Search / Filter Controls -->
+        <div class="mb-8 p-4 bg-slate-800/50 backdrop-blur-sm rounded-lg border border-slate-700 sticky top-4 z-10">
+            <div class="relative">
+                <input type="text" id="searchInput" placeholder="키워드로 사례 검색... (예: 골키퍼, 백패스)" class="w-full bg-slate-900 border border-slate-600 rounded-md py-2 px-4 pl-10 text-white placeholder-slate-500 focus:ring-2 focus:ring-cyan-400 focus:border-cyan-400 outline-none transition-all">
+                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                    <svg class="h-5 w-5 text-slate-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M9 3.5a5.5 5.5 0 100 11 5.5 5.5 0 000-11zM2 9a7 7 0 1112.452 4.391l3.328 3.329a.75.75 0 11-1.06 1.06l-3.329-3.328A7 7 0 012 9z" clip-rule="evenodd" />
+                    </svg>
+                </div>
+            </div>
+             <p id="searchResult" class="text-center text-sm text-slate-400 mt-2 h-4"></p>
+        </div>
+        
+        <!-- Q&A Cards Grid -->
+        <div id="qaGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <!-- Cards will be injected here by parsing the data -->
+        </div>
+
+        <!-- Footer -->
+        <footer class="text-center mt-12 py-4 border-t border-slate-700">
+            <p class="text-slate-500">내용의 출처는 IFAB의 Q&A 입니다.</p>
+        </footer>
+    </div>
+
+    <script>
+        const qaData = [
+            {
+                "id": 1,
+                "title": "수비수가 실수로 짧게 패스한 볼을 골키퍼가 손으로 잡은 경우",
+                "ko_q": "수비수가 상대 공격수의 압박을 받는 상황에서 페널티 에어리어 밖에서 볼을 컨트롤합니다.\n수비수는 자신의 골키퍼를 보고 의도적으로 그쪽으로 볼을 킥합니다.\n볼을 킥하는 동안 수비수가 잔디에 미끄러져 패스가 짧게 전달되었습니다.\n이 루즈볼을 공격수와 골키퍼가 동시에 쫓아갔고, 골키퍼가 페널티 에어리어 안에서 먼저 손으로 볼을 터치했습니다. 이것이 허용됩니까?",
+                "en_q": "A defender controls the ball outside their penalty area under pressure from an opposing attacker.\nThe defender looks at their goalkeeper and deliberately kicks the ball towards them.\nWhile kicking the ball, the defender slips on the grass, causing the pass to fall short.\nThe loose ball is then chased by both the attacker and the goalkeeper, and the goalkeeper touches the ball first with their hands inside the penalty area. Is this allowed?",
+                "ko_a": "골키퍼는 동료 선수가 의도적으로 킥한 볼에 대해서는, 비록 그 패스 시도가 부정확하거나 실패했더라도 자신의 페널티 에어리어 안에서 손으로 볼을 다루는 것이 허용되지 않습니다.\n주심은 플레이를 중단시키고 상대팀에게 간접 프리킥을 부여합니다.\n골키퍼에게 별도의 징계 조치는 내려지지 않습니다.",
+                "en_a": "The goalkeeper is not permitted to handle the ball inside their penalty area after it has been deliberately kicked to them by a team-mate, even if the attempted pass is inaccurate or unsuccessful.\nThe referee stops play and awards an indirect free kick to the opposing team.\nNo disciplinary sanction is taken against the goalkeeper.",
+                "key_point": "경기규칙 제12조에 따라 골키퍼가 동료 선수에 의해 의도적으로 킥된 볼을 자신의 페널티 에어리어 안에서 손/팔로 터치하면 상대팀에게 간접 프리킥이 주어집니다."
+            },
+            {
+                "id": 2,
+                "title": "골키퍼가 잡으려다 실수로 떨어뜨린 볼을 다시 잡은 경우",
+                "ko_q": "골키퍼가 자신의 페널티 에어리어 안에서 볼을 잡기 위해 점프하여 상대의 도전 없이 볼을 잡았습니다.\n하지만 볼이 실수로 골키퍼의 손에서 빠져나가 발치 지면으로 떨어졌습니다.\n공격수가 볼을 향해 달려갔으나, 공격수가 도달하기 전에 골키퍼가 페널티 에어리어 안에서 볼을 다시 집어 들었습니다. 올바른 판정은 무엇입니까?",
+                "en_q": "A goalkeeper jumps for the ball inside their penalty area and catches it without being challenged by any opponent; however, the ball accidentally slips out of the goalkeeper’s hands and falls to the ground at their feet.\nAn attacker runs towards the ball, but the goalkeeper picks it up inside the penalty area before the attacker can reach it. What is the correct decision?",
+                "ko_a": "골키퍼가 파울을 당하지 않았다면 주심은 플레이를 계속하도록 허용합니다.\n볼을 잡으려다 실패한 시도는 볼을 방출한 것으로 간주되지 않으므로, 골키퍼는 다른 선수가 터치하기 전에 볼을 두 번째로 손으로 다룰 수 있습니다 (간접 프리킥 반칙이 아님).",
+                "en_a": "Provided that the goalkeeper is not fouled, the referee allows play to continue.\nThe unsuccessful attempt to hold the ball is not considered to be releasing the ball, so the goalkeeper may handle the ball a second time before it has touched another player (no indirect free kick offence).",
+                "key_point": "골키퍼가 볼을 잡으려다 실수로 떨어뜨린 것은 볼을 소유했다가 의도적으로 놓은(방출한) 것으로 보지 않으므로, 다시 잡더라도 재차 터치 반칙에 해당하지 않습니다."
+            },
+            {
+                "id": 3,
+                "title": "아웃 오브 플레이 직전의 볼을 공격수가 손으로 잡았을 때",
+                "ko_q": "볼이 코너킥이 되기 위해 천천히 골라인 밖으로 향하고 있을 때, 공격팀 선수가 볼이 아직 경기장 안에 있는 상태에서 골라인 근처에서 손으로 볼을 집어 들었습니다.\n볼이 경기장을 나가기 전까지 다른 어떤 선수도 볼을 터치할 기회가 없었다면 올바른 판정은 무엇입니까?",
+                "en_q": "When the ball is slowly heading out for a corner kick, an attacking team player picks it up with their hands while it is still on the field of play, close to the goal line.\nWhat is the correct decision if no other player has the opportunity to touch the ball before it leaves the field?",
+                "ko_a": "주심은 수비팀에게 직접 프리킥을 부여합니다. 이는 볼이 여전히 인플레이 상황일 때 공격 선수가 의도적으로 볼을 손으로 다루었기 때문입니다. 해당 선수에게 경고는 주어지지 않습니다.",
+                "en_a": "The referee awards a direct free kick to the defending team because the attacking player deliberately handled the ball while it was still in play; the player is not cautioned.",
+                "key_point": "볼 전체가 경계선을 완전히 넘기 전까지는 인플레이 상태이며, 이 상태에서 손으로 볼을 터치면 경기규칙 제12조에 따른 핸드볼 반칙으로 직접 프리킥이 선언됩니다."
+            },
+            {
+                "id": 4,
+                "title": "수비수의 패스 실수를 골키퍼가 손으로 잡았을 때",
+                "ko_q": "A팀 미드필더가 발로 A팀 수비수에게 볼을 패스했는데, 수비수가 B팀 공격수의 압박을 받으며 볼을 플레이하지 못했습니다.\n이후 볼이 A팀 페널티 에어리어 안으로 들어갔고 A팀 골키퍼가 이를 손으로 집어 들었습니다. 올바른 판정은 무엇입니까?",
+                "en_q": "A midfielder (Team A) passes the ball with their foot to a defender (Team A), who fails to play the ball while under pressure from an attacker (Team B).\nThe ball then enters Team A’s penalty area and is picked up by the goalkeeper (Team A). What is the correct decision?",
+                "ko_a": "주심은 플레이를 계속하도록 허용합니다. 이는 골키퍼에게 의도적으로 킥한 패스가 아니기 때문입니다.",
+                "en_a": "The referee allows play to continue as this was not a deliberate kick to the goalkeeper.",
+                "key_point": "골키퍼의 핸들링 제한은 동료 선수가 골키퍼에게 '의도적으로 킥한' 볼에만 적용됩니다. 수비수를 향한 패스가 굴절되거나 전달 과정의 실수로 골키퍼에게 간 경우는 해당하지 않습니다."
+            },
+            {
+                "id": 5,
+                "title": "수비수가 볼을 보호하며 골키퍼에게 보낸 후 골키퍼가 잡은 경우",
+                "ko_q": "수비수가 자신의 골문을 향한 상태에서 발로 볼을 컨트롤하다가 뒤에서 다가오는 상대 공격수를 인지했습니다.\n수비수는 상대 선수를 상대로 정당하게 볼을 보호(실딩)했으며, 두 선수 모두 볼을 터치하지 않은 상태에서 골키퍼가 페널티 에어리어 안에서 볼을 집어 들었습니다. 올바른 판정은 무엇입니까?",
+                "en_q": "A defender controls the ball with the foot while facing their own goal and then notices an opposing attacker approaching from behind.\nThe defender legally shields the ball from the opponent, and neither player touches the ball until it is picked up by the goalkeeper inside their penalty area. What is the correct decision?",
+                "ko_a": "주심은 플레이를 계속하도록 허용합니다. 이는 골키퍼에게 의도적으로 킥한 볼이 아니기 때문입니다.",
+                "en_a": "The referee allows play to continue as this was not a deliberate kick to the goalkeeper.",
+                "key_point": "수비수가 볼을 건드리지 않고 몸으로 보호하며 골키퍼에게 흘려보내는 행위는 '의도적으로 킥한' 것이 아니므로 골키퍼가 손으로 잡아도 반칙이 아닙니다."
+            },
+            {
+                "id": 6,
+                "title": "백패스 실수를 골키퍼가 차내려다 실패한 후 손으로 막은 경우",
+                "ko_q": "볼이 인플레이 상황일 때, 선수가 자신의 골키퍼에게 의도적으로 볼을 킥했습니다. 골키퍼가 볼을 다시 인플레이 상황으로 차내려고 시도했으나 실패했습니다.\n볼이 골키퍼의 발에 맞고 비어 있는 골문을 향해 뒤로 흘러갔습니다.\n골키퍼는 볼을 쫓아가 손으로 터치하여 골문으로 들어가는 것을 막았습니다. 올바른 판정은 무엇입니까?",
+                "en_q": "While the ball is in play, a player deliberately kicks the ball to their goalkeeper, who attempts unsuccessfully to kick it into play.\nThe ball touches the goalkeeper’s foot but goes backwards towards the empty goal.\nThe goalkeeper then chases the ball and touches it with their hands, preventing it from entering the goal. What is the correct decision?",
+                "ko_a": "골키퍼가 명백하게 볼을 킥하려고 시도했으므로, 그 이후에 볼을 손으로 다룬 것은 반칙이 아닙니다. 주심은 플레이를 계속하도록 허용합니다.",
+                "en_a": "As the goalkeeper clearly attempted to kick the ball, it was not an offence when they handled the ball afterwards. The referee allows play to continue.",
+                "key_point": "경기규칙 제12조의 개정된 내용에 따르면, 골키퍼가 동료의 백패스를 다시 플레이하기 위해 명백히 킥했거나 킥하려고 시도한 이후에는, 그 시도가 실패하더라도 손으로 볼을 터치하는 것이 허용됩니다."
+            },
+            {
+                "id": 7,
+                "title": "골키퍼가 세이브한 뒤 리바운드된 볼을 다시 잡은 경우",
+                "ko_q": "골키퍼가 자신의 페널티 에어리어 안에서 손으로 볼을 쳐내어 슛을 세이브했습니다.\n그 결과 볼은 몇 미터 튕겨 나갔으나 경기장 안에 남아있었습니다.\n골키퍼는 볼을 향해 달려가 다른 선수가 터치하기 전에 페널티 에어리어 안에서 볼을 잡았습니다. 올바른 판정은 무엇입니까?",
+                "en_q": "A goalkeeper saves a shot inside their penalty area by parrying the ball with their hands.\nAs a result, the ball bounces a few metres away and remains on the field of play.\nThe goalkeeper then runs towards the ball and catches it inside the penalty area before it has touched another player. What is the correct decision?",
+                "ko_a": "주심은 플레이를 계속하도록 허용합니다.\n골키퍼가 세이브를 하거나 골키퍼에게 맞고 튀어나온(리바운드된) 볼은 골키퍼가 손/팔로 볼을 컨트롤한 것으로 간주되지 않으므로, 반칙 없이 두 번째로 볼을 손으로 다룰 수 있습니다.",
+                "en_a": "The referee allows play to continue.\nA goalkeeper is not considered to be in control of the ball with their hand(s) if the ball rebounds from the goalkeeper or the goalkeeper has made a save, so they may handle the ball a second time without committing an offence.",
+                "key_point": "세이브 과정에서 볼을 쳐낸 것은 경기규칙상 '소유'나 '컨트롤'로 보지 않기에 이후에 다시 잡는 행위는 재차 터치 반칙이 아닙니다."
+            },
+            // ... All other items will be added here in the same format
+            {
+                "id": 8,
+                "title": "백패스 컨트롤 실수 후 골키퍼가 다시 잡은 경우",
+                "ko_q": "수비수가 자신의 골키퍼에게 의도적으로 볼을 킥했고, 골키퍼는 그 패스를 컨트롤하려 시도했습니다(볼을 걷어내려는 시도는 없었음).\n볼이 골키퍼의 발/다리에 맞고 튀어나온 뒤, 골키퍼는 잔디에 미끄러졌으나 다가오는 상대 선수보다 먼저 페널티 에어리어 안에서 볼을 잡았습니다.\n올바른 판정은 무엇입니까?",
+                "en_q": "A defender deliberately kicks the ball to their goalkeeper who tries to control the pass (no attempt to clear the ball).\nAfter the ball rebounds from their foot/leg, the goalkeeper slips on the grass and then catches the ball inside their penalty area, ahead of an approaching opponent.\nWhat is the correct decision?",
+                "ko_a": "골키퍼는 동료 선수가 의도적으로 킥한 볼에 대해, '볼을 인플레이로 방출하기 위해 명백히 킥했거나 킥하려고 시도한' 경우가 아니라면 손/팔로 터치할 수 없습니다. 이 상황에서는 그런 시도가 없었습니다.\n따라서 플레이는 중단되며 공격팀의 간접 프리킥으로 재개됩니다. 골키퍼에 대한 별도의 징계 조치는 없습니다.",
+                "en_a": "The goalkeeper cannot touch the ball with their hand/arm after it was deliberately kicked to them by a team-mate, ‘unless the goalkeeper has clearly kicked or attempted to kick the ball to release it into play’ which did not happen in this situation.\nTherefore, play is stopped and restarted with an indirect free kick to the attacking team. There is no disciplinary sanction for the goalkeeper.",
+                "key_point": "동료의 의도적인 패스에 대해 단순히 '컨트롤' 하려다 실수한 경우에는 손으로 다시 잡는 것이 허용되지 않으며, '걷어내기(방출)'를 위한 명백한 킥 시도가 있었을 때만 예외가 인정됩니다."
+            },
+            {
+                "id": 9,
+                "title": "페널티 에어리어 밖 골키퍼의 몸에 밀착된 팔에 볼이 맞은 경우",
+                "ko_q": "골키퍼가 페널티 에어리어를 벗어나 골문을 향해 달려오는 공격수에게 접근합니다.\n공격수가 골키퍼를 지나쳐 볼을 킥하려 했으나, 볼은 골키퍼의 몸에 밀착되어 있던 왼쪽 팔에 맞고 튀어나왔습니다.\n주심이 그 팔의 위치가 골키퍼의 신체를 부자연스럽게 크게 만들지 않았고 볼과의 접촉이 우연이라고 판단했다면 올바른 판정은 무엇입니까?",
+                "en_q": "A goalkeeper leaves the penalty area and approaches an attacker who is running towards the goal.\nThe attacker tries to kick the ball past the goalkeeper, but it rebounds off the goalkeeper’s left arm, which is close to their body.\nWhat is the correct decision if the referee judges that the arm did not make the goalkeeper’s body unnaturally bigger and the contact with the ball was accidental?",
+                "ko_a": "선수의 손이나 팔에 볼이 닿는 모든 경우가 반칙은 아니며, 이는 페널티 에어리어 밖의 골키퍼에게도 적용됩니다.\n이 경우 골키퍼는 핸드볼 반칙을 범한 것이 아니므로, 주심은 플레이를 계속하도록 허용하며 골키퍼에게 아무런 징계 조치도 취하지 않습니다.",
+                "en_a": "Not every touch of a player’s hand or arm with the ball is an offence – this also applies to goalkeepers outside their penalty area.\nIn this case, the goalkeeper did not commit a handball offence, so the referee allows play to continue and takes no disciplinary action against the goalkeeper.",
+                "key_point": "페널티 에어리어 밖의 골키퍼는 일반 선수와 동일한 핸드볼 규칙을 적용받으며, 신체를 부자연스럽게 확대하지 않은 정당한 위치에서의 접촉은 반칙이 아닙니다."
+            },
+            // ... Continuing to add all items
+            {
+                "id": 10,
+                "title": "골키퍼가 손으로 잡지 않은 볼에 대한 공격수의 도전",
+                "ko_q": "골키퍼가 세이브를 한 후, 골 에어리어 안 골키퍼 근처 지면에 볼이 있을 때 공격수가 골키퍼와 볼을 다툽니다.\n골키퍼가 손으로 볼을 터치하고 있지 않다면 올바른 판정은 무엇입니까?",
+                "en_q": "After a goalkeeper has made a save, an attacker challenges the goalkeeper for the ball when it is on the ground, near the goalkeeper, and inside the goal area.\nWhat is the correct decision if the goalkeeper is not touching the ball with their hand(s)?",
+                "ko_a": "골키퍼가 손으로 볼을 컨트롤하고 있지 않으므로 공격수는 골키퍼와 볼을 다툴 수 있습니다.\n도전 행위가 조심성 없거나, 무모하거나, 과도한 힘을 사용한 것이 아니라면 주심은 플레이를 계속하도록 허용합니다.",
+                "en_a": "The attacker may compete with the goalkeeper for the ball because the goalkeeper is not in control of the ball with their hand(s).\nIf the challenge is not careless, reckless or using excessive force, the referee allows play to continue.",
+                "key_point": "골키퍼가 손/팔로 볼을 소유(컨트롤)하고 있는 동안에만 상대 선수가 도전할 수 없으며, 볼이 지면에 있고 손이 닿지 않은 상태라면 정당한 도전이 가능합니다."
+            },
+            {
+                "id": 11,
+                "title": "골키퍼가 볼을 놓은 후 상대가 다가오자 다시 잡은 경우",
+                "ko_q": "골키퍼가 자신의 페널티 에어리어 안에서 볼을 잡은 뒤 손에서 볼을 놓았습니다.\n볼이 지면에 닿자마자, 골키퍼 뒤쪽 경기장 안에 머물러 있던 공격수가 볼을 향해 달려갔습니다.\n골키퍼는 공격수를 인지하고 페널티 에어리어 안에서 볼을 손으로 집어 들어 상대 선수가 볼을 터치하는 것을 막았습니다.\n공격수가 골키퍼에게 접근하는 동안 파울을 범하지 않았다면 올바른 판정은 무엇입니까?",
+                "en_q": "A goalkeeper catches the ball inside their penalty area and then releases it from their hands.\nAs soon as the ball is on the ground, an attacker, who remained on the field of play behind the goalkeeper’s back, runs towards the ball.\nThe goalkeeper then notices the attacker, picks the ball up with their hands inside the penalty area, and prevents the opponent from touching the ball.\nWhat is the correct decision if the attacker did not commit a foul while approaching the goalkeeper?",
+                "ko_a": "골키퍼는 볼을 방출한 후 다른 선수가 터치하기 전까지는 다시 볼을 손으로 다룰 수 없으므로, 주심은 플레이를 중단시키고 공격팀에게 간접 프리킥을 부여합니다.\n하지만 골키퍼에 대한 별도의 징계 조치는 없습니다.",
+                "en_a": "The goalkeeper cannot handle the ball after releasing it and before it has touched another player, so the referee stops play and awards an indirect free kick to the attacking team.\nHowever, there is no disciplinary sanction for the goalkeeper.",
+                "key_point": "골키퍼가 일단 볼을 손에서 놓아 방출하면, 다른 선수가 볼을 터치할 때까지 다시 손으로 다룰 수 없으며 이를 위반 시 간접 프리킥으로 처벌됩니다."
+            },
+            {
+                "id": 12,
+                "title": "페널티 에어리어 밖에서 킥한 뒤 안으로 드리블해 다시 잡은 경우",
+                "ko_q": "A팀이 상대 진영으로 롱패스를 했습니다.\nB팀 골키퍼가 자신의 페널티 에어리어를 벗어나 달려 나와 발로 볼을 터치했고, 페널티 에어리어 안으로 드리블해 들어온 뒤 볼을 집어 들었습니다.\n올바른 판정은 무엇입니까?",
+                "en_q": "Team A makes a long pass into the opponents’ half.\nTeam B goalkeeper runs out of their penalty area, touches the ball with their feet, dribbles into the penalty area and then picks the ball up.\nWhat is the correct decision?",
+                "ko_a": "주심은 플레이를 계속하도록 허용합니다.\n상대 선수에 의해 플레이된 볼을 골키퍼가 터치한 것이므로 이 행동은 반칙이 아닙니다.\n골키퍼가 드리블 후 다음과 같은 상황에서 볼을 손/팔로 터치한다면 반칙이 됩니다:\n- 동료 선수에 의해 골키퍼에게 의도적으로 킥된 볼인 경우\n- 동료 선수가 실시한 스로인을 직접 받은 경우",
+                "en_a": "The referee allows play to continue.\nThis action is not an offence as the goalkeeper touched the ball after it had been played by an opponent.\nIt would be an offence if the goalkeeper dribbles and then touches the ball with the hand/ arm after:\n- the ball has been deliberately kicked to the goalkeeper by a team-mate\n- receiving the ball directly from a throw-in taken by a team-mate",
+                "key_point": "상대 선수가 마지막으로 플레이한 볼을 골키퍼가 페널티 에어리어 밖에서 발로 다루다 안으로 가져와 손으로 잡는 것은 정당한 플레이입니다."
+            },
+            {
+                "id": 13,
+                "title": "볼 다툼 중 높은 발로 상대 얼굴을 가격한 경우",
+                "ko_q": "경기장 중앙에서 볼을 다투던 중, 한 선수가 볼을 터치하지 못했고 결과적으로 높게 든 발이 상대 선수의 얼굴에 닿았습니다.\n올바른 판정은 무엇입니까?",
+                "en_q": "While challenging an opponent for the ball in the middle of the field, a player fails to touch the ball and, as a result, their high foot makes contact with the opponent’s face.\nWhat is the correct decision?",
+                "ko_a": "상대 선수와 신체 접촉이 있었으므로, 주심은 직접 프리킥을 부여하고 적절한 징계 조치를 취합니다:\n- 도전이 무모했다면 경고(옐로카드)\n- 선수가 상대의 안전을 위태롭게 했거나 과도한 힘을 사용했다면 퇴장(레드카드)\n상대 선수는 경기장 안에서 상태 검진 및 치료를 받을 수 있으며, 경기를 계속할 수 있다면 경기장에 남을 수 있습니다.",
+                "en_a": "As there is contact with the opponent, the referee awards a direct free kick and takes appropriate disciplinary action:\n- caution (yellow card) if the challenge was reckless\n- sending-off (red card) if the player endangered the safety of the opponent/used excessive force\nThe opponent can be assessed and treated on the field of play and may remain if able to continue.",
+                "key_point": "신체 접촉을 수반한 위험한 도전은 그 강도와 위험성에 따라 직접 프리킥 및 경고 또는 퇴장으로 처벌됩니다."
+            },
+            {
+                "id": 14,
+                "title": "주위에 선수가 없는 상황에서 어깨 위로 발을 들어 볼을 킥한 경우",
+                "ko_q": "한 선수가 어깨 높이 위로 다리를 들어 올려 볼을 킥했습니다.\n이 행동은 다른 선수들의 도달 범위 밖에서 이루어져 그들에게 부상 위험을 주지 않았으며, 볼을 플레이하는 것을 방해하지도 않았습니다.\n올바른 판정은 무엇입니까?",
+                "en_q": "A player raises their leg above shoulder level and kicks the ball.\nThis action does not risk injury to other players and does not prevent them from playing the ball, as it is beyond their reach.\nWhat is the correct decision?",
+                "ko_a": "주심은 플레이를 계속하도록 허용합니다. 이는 위험한 태도로 플레이한 것으로 간주되지 않기 때문입니다(반칙 아님).",
+                "en_a": "The referee allows play to continue, as it is not considered playing in a dangerous manner (no offence).",
+                "key_point": "'위험한 태도로 플레이하는 것'은 근처에 상대 선수가 있어 부상 위협을 주거나 그 선수가 볼을 플레이하는 것을 저해할 때만 반칙으로 성립됩니다."
+            },
+            {
+                "id": 15,
+                "title": "수비수의 헤더가 자신의 손에 맞고 자책골이 된 경우",
+                "ko_q": "A팀이 상대팀 페널티 에어리어로 볼을 킥했습니다.\nB팀 수비수가 헤더를 한 볼이 자신의 손/팔에 맞았고 그대로 자기 팀 골문으로 들어갔습니다.\n올바른 판정은 무엇입니까?",
+                "en_q": "Team A kicks the ball into the opponents’ penalty area.\nA defender of Team B heads the ball which hits their hand/arm and then goes directly into their team’s goal.\nWhat is the correct decision?",
+                "ko_a": "주심은 득점을 인정합니다.\n손/팔을 이용한 득점 금지 규정은 오직 공격팀 선수에게만 적용됩니다.",
+                "en_a": "The referee awards a goal.\nThe prohibition of scoring from the hand/arm only applies to attacking team players.",
+                "key_point": "수비수가 자신의 페널티 에어리어 안에서 의도치 않게 손에 맞고 자책골이 된 경우, 이는 핸드볼 반칙이 아니며 득점으로 인정됩니다."
+            },
+            {
+                "id": 16,
+                "title": "공격수가 부자연스러운 팔 위치로 볼을 맞힌 후 동료가 득점한 경우",
+                "ko_q": "페널티 에어리어 안에서 볼이 인플레이 상황입니다.\n골키퍼(A팀)가 매우 가까이 있는 공격수(B팀)의 압박을 받으며 볼을 걷어내려 시도했고, 공격수는 이를 차단하려 했습니다.\n볼이 몸에서 떨어져 신체를 부자연스럽게 크게 만든 공격수의 팔에 맞았습니다.\n그 후 볼이 다른 B팀 선수에게 연결되어 득점을 기록했습니다.\n올바른 판정은 무엇입니까?",
+                "en_q": "The ball is in play in the penalty area.\nThe goalkeeper (Team A) attempts to kick the ball away under pressure from an attacker (Team B) who is very close and tries to block this clearance.\nThe ball hits the attacker’s arm that is away from the body and makes it unnaturally bigger.\nAfter that, the ball goes to another Team B player who scores a goal.\nWhat is the correct decision?",
+                "ko_a": "주심은 득점을 취소하고 핸드볼 반칙을 이유로 A팀에게 직접 프리킥을 부여합니다.",
+                "en_a": "The referee disallows the goal and awards a direct free kick to Team A for a handball offence.",
+                "key_point": "공격자가 핸드볼 반칙(부자연스럽게 신체를 확대한 경우 포함)을 범한 직후 자신 또는 동료가 득점한다면 해당 득점은 무효이며 핸드볼로 처벌됩니다."
+            },
+            {
+                "id": 17,
+                "title": "골키퍼가 드리블로 나갔다가 다가오는 상대를 피해 안에서 다시 잡은 경우",
+                "ko_q": "골키퍼가 자신의 페널티 에어리어 안에서 슛을 잡아 지면에 놓은 뒤, 발로 드리블하여 페널티 에어리어 밖으로 나갔습니다.\n상대 선수가 볼을 향해 전력 질주하자, 골키퍼는 다시 페널티 에어리어 안으로 볼을 드리블해 들어와 손으로 집어 들었습니다.\n올바른 판정은 무엇입니까?",
+                "en_q": "The goalkeeper catches a shot inside their penalty area, puts the ball on the ground, and dribbles it with the feet outside the penalty area.\nAn opponent then sprints towards the ball, and the goalkeeper dribbles the ball back into the penalty area and picks it up.\nWhat is the correct decision?",
+                "ko_a": "주심은 공격팀에게 간접 프리킥을 부여합니다. 골키퍼가 손에서 볼을 방출한 뒤 다른 선수가 터치하기 전에는 다시 손/팔로 볼을 터치할 수 없기 때문입니다.\n핸드볼 반칙이 자신의 페널티 에어리어 안에서 발생했으므로, 유망한 공격 저지(SPA)를 이유로 골키퍼에게 경고(옐로카드)를 주거나 명백한 득점 기회 저지(DOGSO)를 이유로 퇴장(레드카드)시키지 않습니다.",
+                "en_a": "The referee awards an indirect free kick to the attacking team because the goalkeeper cannot touch the ball with the hand/ arm after releasing it from the hand(s) and before it has touched another player.\nAs the handball offence occurred inside their penalty area, the goalkeeper is not cautioned (yellow card) for stopping a promising attack or sent off (red card) for denying the opponent an obvious goal-scoring opportunity.",
+                "key_point": "골키퍼가 볼을 방출한 후 다시 잡는 재차 터치 반칙은 페널티 에어리어 안에서 발생하더라도 간접 프리킥으로만 처벌하며, 득점 기회 저지 등의 징계는 적용하지 않습니다."
+            },
+            {
+                "id": 18,
+                "title": "일대일 상황에서 볼 도전 없이 공격수를 밀어 득점을 저지한 경우",
+                "ko_q": "공격수가 볼을 가지고 상대 페널티 에어리어로 달려 들어갔습니다(일대일 상황).\n수비수가 공격수를 따라잡았으나 볼을 플레이할 가능성이 없는 상태에서, 명백한 득점 기회를 저지(DOGSO)하기 위해 공격수를 밀었습니다.\n올바른 판정은 무엇입니까?",
+                "en_q": "An attacker runs with the ball into the opponents’ penalty area (one-on-one situation).\nA defender catches up with the attacker but has no possibility to play the ball so the defender pushes the opponent to deny an obvious goal-scoring opportunity (DOGSO).\nWhat is the correct decision?",
+                "ko_a": "주심은 페널티킥을 부여합니다.\n수비수의 반칙이 볼을 플레이하려는 시도나 볼에 대한 도전이 아니었으므로, 명백한 득점 기회 저지(DOGSO)를 이유로 수비수를 퇴장(레드카드) 조치합니다.",
+                "en_a": "The referee awards a penalty kick.\nThe defender is sent off (red card) for DOGSO because the offence was not an attempt to play the ball or a challenge for the ball.",
+                "key_point": "페널티 에어리어 안에서 DOGSO 반칙이 발생하더라도 볼을 플레이하려는 시도가 없는 반칙(밀기, 붙잡기 등)은 '삼중 처벌 금지' 예외에 해당하여 퇴장 조치됩니다."
+            },
+            {
+                "id": 19,
+                "title": "볼이 플레이 가능한 거리 내에서 어깨로 정당한 차징을 한 경우",
+                "ko_q": "수비수와 공격수가 몸에 붙인 어깨와 팔 윗부분을 사용하여 볼을 다툽니다 (측면 대 측면 접촉이며, 조심성 없거나 무모하거나 과도한 힘을 사용하지 않음).\n볼은 두 선수 모두에게 가까이 있습니다 (다리를 뻗으면 터치할 수 있는 거리).\n올바른 판정은 무엇입니까?",
+                "en_q": "A defender and an attacker challenge physically for the ball, using shoulders and upper arms which are kept close to the body (side-to-side contact, not in a careless or reckless manner or using excessive force).\nThe ball is close to both players (they are able to touch it by stretching out their legs).\nWhat is the correct decision?",
+                "ko_a": "볼이 플레이 가능한 거리 내에 있고 필요 이상의 힘을 사용하지 않는다면, 상대 선수에 의한 차징은 정당합니다.\n반칙이 아니므로 주심은 플레이를 계속하도록 허용합니다.",
+                "en_a": "Players may be fairly charged by opponents if the ball is within playing distance and they do not use more force/energy than is necessary.\nThere is no foul, so the referee allows play to continue.",
+                "key_point": "볼이 플레이 가능한 거리 내에 있을 때 어깨를 이용한 측면 접촉(차징)은 정당한 신체적 도전으로 간주됩니다."
+            },
+            {
+                "id": 20,
+                "title": "유망한 공격 상황에서 어드밴티지 적용 후 다시 무모한 반칙을 범한 경우",
+                "ko_q": "수비수가 유망한 공격을 저지(SPA)하기 위해 공격수의 유니폼을 잡아당겼습니다.\n공격수가 상대에게서 벗어나 볼을 가지고 페널티 에어리어 안으로 달려 들어가자 주심은 어드밴티지를 적용했습니다.\n그 후 같은 수비수가 공격수를 따라잡아 무모한 태도으로 볼에 도전하며 공격수에게 파울을 범했습니다 (DOGSO 상황은 아님).\n올바른 판정은 무엇입니까?",
+                "en_q": "A defender pulls an attacker’s shirt to stop a promising attack (SPA).\nThe referee applies the advantage as the attacker gets free of the opponent and runs with the ball into the penalty area.\nAfter that, the same defender catches up with the attacker, challenges for the ball in a reckless manner and fouls the attacker (no DOGSO offence).\nWhat is the correct decision?",
+                "ko_a": "주심은 페널티킥을 부여하고, 무모한 도전을 한 수비수에게 경고(옐로카드)를 줍니다.\n최초의 SPA 반칙에 대해서는 어드밴티지를 적용함으로써 유망한 공격이 지속/회복되었으므로 경고를 주지 않습니다.",
+                "en_a": "The referee awards a penalty kick and cautions (yellow card, YC) the defender for the reckless challenge.\nThere is no YC for the SPA offence because, by playing the advantage, the promising attack was continued/restored.",
+                "key_point": "SPA 반칙 상황에서 어드밴티지를 적용하여 공격이 계속되었다면 나중에 경고를 주지 않지만, 이후에 별도로 발생한 무모한 반칙에 대해서는 징계 조치를 해야 합니다."
+            },
+            {
+                "id": 21,
+                "title": "골키퍼가 자신의 프리킥을 드리블해 안으로 가져와 다시 잡은 경우",
+                "ko_q": "수비수가 프리킥을 실시하여 골키퍼에게 패스했습니다.\n골키퍼가 페널티 에어리어 밖에서 발로 볼을 터치했는데, 공격수가 볼을 향해 빠르게 달려오는 것을 발견하고는 페널티 에어리어 안으로 드리블해 들어와 볼을 손으로 집어 들었습니다.\n올바른 판정은 무엇입니까?",
+                "en_q": "A defender takes a free kick and passes the ball to the goalkeeper.\nThe goalkeeper touches the ball with the foot outside their penalty area and notices that an attacker is running quickly towards the ball, so the goalkeeper dribbles into the penalty area and then picks the ball up.\nWhat is the correct decision?",
+                "ko_a": "주심은 골키퍼가 볼을 손으로 다룬 지점에서 공격팀에게 간접 프리킥을 부여합니다.\n핸드볼 반칙이 자신의 페널티 에어리어 안에서 발생했으므로, 골키퍼는 유망한 공격 저지(SPA)로 경고를 받거나 명백한 득점 기회 저지(DOGSO)로 퇴장당하지 않습니다.",
+                "en_a": "The referee awards an indirect free kick to the attacking team at the point where the goalkeeper handled the ball.\nAs the handball offence occurred inside their penalty area, the goalkeeper cannot be cautioned (yellow card) for stopping a promising attack or sent off (red card) for denying the opponent an obvious goal-scoring opportunity.",
+                "key_point": "골키퍼가 자신의 팀에 의해 재개된 볼(프리킥 등)을 직접 받은 후 손으로 다루면 재차 터치 반칙이며, 이는 페널티 에어리어 안의 핸들링 특례에 따라 인적 징계 없이 간접 프리킥으로만 재개됩니다."
+            },
+            {
+                "id": 22,
+                "title": "파울을 당한 척하며 넘어져 볼을 손으로 잡은 경우",
+                "ko_q": "경기장 중앙에서 상대 선수와 볼을 다투던 중, 한 선수가 지면에 넘어지면서 파울을 당한 척 꾸며내고는 손으로 볼을 잡았습니다.\n올바른 판정은 무엇입니까?",
+                "en_q": "While competing with an opponent for the ball, a player falls to the ground in the middle of the field, pretends to have been fouled and grabs the ball with their hand.\nWhat is the correct decision?",
+                "ko_a": "해당 선수는 두 가지 반칙(시뮬레이션 및 인플레이 상황에서 의도적인 핸드볼)을 범했습니다.\n두 반칙이 매우 근접한 시점에 발생했으므로, 주심은 핸드볼 반칙에 대해 직접 프리킥을 부여하고 주심을 속이려 한 시도(반스포츠적 행위)에 대해 선수에게 경고(옐로카드)를 줄 수 있습니다.",
+                "en_a": "The player is guilty of two offences (simulation and deliberately handling the ball when it is in play).\nAs the offences occur so close together, the referee can award a direct free kick for the handball offence and caution (yellow card) the player for unsporting behaviour (an attempt to deceive the referee).",
+                "key_point": "거의 동시에 두 가지 반칙이 발생한 경우 주심은 더 심한 반칙(여기서는 신체적 반칙인 핸드볼)으로 처벌하며, 시뮬레이션에 대한 징계(경고)는 별도로 집행합니다."
+            },
+            {
+                "id": 23,
+                "title": "수비수가 머리 높이로 발을 들어 걷어내다 상대를 위협한 경우",
+                "ko_q": "수비수가 공격수를 상대로 볼 다툼을 하며 머리 높이 위로 다리를 들어 올렸습니다.\n수비수가 볼을 킥했고 발이 공격수의 머리/얼굴을 간신히 비껴갔으며 상대와의 신체 접촉은 없었습니다.\n올바른 판정은 무엇입니까?",
+                "en_q": "A defender challenges an attacker for the ball and raises the leg above head level.\nThe defender kicks the ball and their foot narrowly misses the attacker’s head/face but there is no contact with the opponent.\nWhat is the correct decision?",
+                "ko_a": "상대 선수와 접촉이 없었으므로 주심은 플레이를 중단시키고 공격팀에게 간접 프리킥을 부여합니다.\n수비수는 다음과 같은 조치를 받습니다:\n- 도전이 무모했거나 유망한 공격을 저지했다면 경고(옐로카드)\n- 상대의 안전을 위태롭게 했거나 과도한 힘을 사용했거나 명백한 득점 기회를 저지했다면 퇴장(레드카드)",
+                "en_a": "The referee stops play and awards the attacker’s team an indirect free kick (as there was no contact with the attacker).\nThe defender is:\n- cautioned (yellow card) if the challenge was reckless or stopped a promising attack\n- sent off (red card) if the defender endangered the safety of the opponent/used excessive force or denied an obvious goal-scoring opportunity",
+                "key_point": "신체 접촉이 없는 위험한 태도의 플레이는 간접 프리킥으로 재개하지만, 그 행위의 위험성이나 전술적 영향에 따라 경고 또는 퇴장 조치를 취할 수 있습니다."
+            },
+            {
+                "id": 24,
+                "title": "서로 다른 두 팀 선수의 반칙이 순차적으로 발생했을 때",
+                "ko_q": "공격수가 수비수와의 위치 다툼 과정에서 상대를 명백히 붙잡아 움직임을 방해했습니다.\n수비수는 볼을 보호하며 벗어나려 노력하던 중, 팔꿈치로 공격수의 얼굴을 가격했습니다.\n올바른 판정은 무엇입니까?",
+                "en_q": "An attacker attempts to win a position with a defender, clearly holds the opponent and impedes their movement.\nThe defender shields the ball, tries to get free and then strikes the attacker in the face with the elbow.\nWhat is the correct decision?",
+                "ko_a": "주심은 플레이를 중단시키고, 먼저 발생한 (홀딩) 반칙을 처벌하여 공격팀의 반칙으로 직접 프리킥을 부여합니다.\n수비수에 대한 징계는 반칙의 심각성에 따라 달라집니다.\n만약 수비수가 무모한 태도로 행동했다면 경고(옐로카드)를, 난폭한 행위를 범했다면 퇴장(레드카드) 조치합니다.\n공격수의 홀딩 반칙이 노골적이거나 도발적이었다고 판단된다면 반스포츠적 행위로 경고를 줄 수 있습니다.",
+                "en_a": "The referee stops play, penalises the first (holding) offence and awards a direct free kick against the attacker’s team.\nThe sanction for the defender depends on the severity of the offence.\nIf the defender was guilty of: acting in a reckless manner – caution (yellow card); violent conduct – sending-off (red card).\nThe attacker may be cautioned for unsporting behaviour if the holding was considered blatant/provocative.",
+                "key_point": "거의 동시에 또는 순차적으로 여러 반칙이 일어났을 때, 주심은 시간상 가장 먼저 발생한 반칙을 기준으로 플레이를 재개하며, 이후 발생한 반칙에 대해서도 그 성격에 따라 적절한 인적 징계를 부과해야 합니다."
+            },
+            {
+                "id": 25,
+                "title": "접촉 없는 방해로 인한 유망한 공격 저지",
+                "ko_q": "수비수(A팀)가 유망한 역습을 시작하며 볼을 차놓고 공격수(B팀)를 지나치려 시도했습니다.\n공격수는 수비수의 진로로 움직였고, 이 움직임은 볼이 어느 선수에게도 플레이 가능한 거리 내에 있지 않은 상황에서 상대가 볼에 도달하는 것을 방해했습니다 (선수 간의 접촉은 없음).\n그 후 볼은 다른 B팀 선수에게 연결되었습니다.\n올바른 판정은 무엇입니까?",
+                "en_q": "A defender (Team A) starts a promising counter-attack, kicks the ball and tries to go past an attacker (Team B).\nThe attacker moves into the defender’s path and this movement prevents the opponent from getting to the ball when it is not within playing distance of either player (no contact between the players).\nSubsequently, the ball goes to another Team B player.\nWhat is the correct decision?",
+                "ko_a": "주심은 플레이를 중단시키고 신체 접촉 없이 상대의 진행을 방해한 이유로 A팀에게 간접 프리킥을 부여합니다.\n반칙을 범한 선수는 유망한 공격을 저지한 이유로 경고(옐로카드)를 받습니다.",
+                "en_a": "The referee stops play and awards an indirect free kick to Team A for impeding the progress of the opponent without contact.\nThe offender is cautioned (yellow card) for stopping a promising attack.",
+                "key_point": "신체 접촉이 없는 진행 방해(임피딩)는 간접 프리킥으로 처벌하며, 이를 통해 상대의 유망한 공격을 저지했다면 반스포츠적 행위로 경고를 주어야 합니다."
+            },
+            {
+                "id": 26,
+                "title": "동료의 백패스가 상대에게 굴절된 후 골키퍼가 잡은 경우",
+                "ko_q": "수비수가 자신의 골키퍼(동료)에게 의도적으로 볼을 킥했습니다.\n그 후 볼이 상대 선수의 다리에 맞았으나 방향은 바뀌지 않았고, 최종적으로 골키퍼에게 전달되어 골키퍼가 자신의 페널티 에어리어 안에서 볼을 집어 들었습니다.\n올바른 판정은 무엇입니까?",
+                "en_q": "A defender deliberately kicks the ball towards a goalkeeper (a team-mate).\nAfter that, the ball makes contact with an opponent’s leg but does not change direction and finally goes to the goalkeeper who picks the ball up inside their penalty area.\nWhat is the correct decision?",
+                "ko_a": "주심은 플레이를 계속하도록 허용합니다.\n패스가 골키퍼에게 도달하기 전 (어느 팀이든) 다른 선수에게 터치되었다면, 골키퍼는 (접촉이나 터치의 강도와 관계없이) 볼을 손으로 다룰 수 있습니다.",
+                "en_a": "The referee allows play to continue.\nIf the ball touches another player (of any team) before the pass reaches the goalkeeper, they can handle the ball (regardless of the strength of the contact/touch).",
+                "key_point": "골키퍼는 동료가 의도적으로 킥한 볼을 직접 받을 때만 손으로 다루는 것이 금지되며, 중간에 다른 선수의 터치나 굴절이 있었다면 핸들링 제한이 해제됩니다."
+            },
+            {
+                "id": 27,
+                "title": "무모한 반칙과 플레이 재개 지연 반칙이 연달아 발생했을 때",
+                "ko_q": "경기가 끝나가고 있으며 A팀이 한 골 차로 앞서고 있습니다.\n추가시간에 A팀 수비수가 B팀 공격수에게 무모한 태도으로 도전했습니다.\n주심이 징계 절차를 시작하기 전에, B팀 선수 한 명이 빠른 프리킥을 준비하자 반칙을 범했던 수비수가 다가와 볼을 차버렸습니다.\n올바른 판정은 무엇입니까?",
+                "en_q": "The match is coming to an end and Team A is winning by one goal.\nIn additional time, a defender (Team A) challenges an attacker (Team B) in a reckless manner.\nBefore the referee has started the disciplinary sanction procedure, one player of Team B prepares to take a quick free kick and the offending defender also comes up and kicks the ball away.\nWhat is the correct decision?",
+                "ko_a": "수비수는 각각의 반칙(무모한 도전 및 플레이 재개 지연)에 대해 경고(옐로카드)를 받아 경고 누적으로 퇴장(레드카드) 조치됩니다.\n플레이는 첫 번째 반칙이 발생한 위치에서 직접 프리킥으로 재개됩니다.",
+                "en_a": "The defender receives a caution (yellow card) for each offence (reckless challenge and delaying the restart of play) and therefore is sent off (red card).\nPlay is restarted with a direct free kick from the position of the first offence.",
+                "key_point": "한 선수가 짧은 시간 내에 서로 다른 두 가지 경고성 반칙을 범했다면 각각에 대해 카드를 부여해야 하며, 이로 인해 경고 누적 퇴장이 발생할 수 있습니다."
+            },
+            {
+                "id": 28,
+                "title": "페널티 에어리어 밖에서 골키퍼의 의도적인 핸드볼",
+                "ko_q": "수비수가 자신의 골키퍼(동료)에게 볼을 킥했습니다.\n볼이 킥된 후 상대팀 공격수 또한 볼을 쫓아갔고, 골키퍼는 페널티 에어리어 밖으로 달려 나와 의도적으로 손으로 볼을 터치했습니다.\n올바른 판정은 무엇입니까?",
+                "en_q": "A defender kicks the ball to a goalkeeper (a team-mate).\nAfter the ball has been kicked, an attacker of the opposing team also chases after the ball so the goalkeeper runs out of the penalty area and deliberately touches the ball with their hand.\nWhat is the correct decision?",
+                "ko_a": "주심은 플레이를 중단시키고 직접 프리킥을 부여합니다.\n만약 주심이 이 핸드볼 반칙이 유망한 공격을 저지했다고 판단하면 골키퍼에게 경고(옐로카드)를, 상대팀의 명백한 득점 기회를 저지했다고 판단하면 골키퍼를 퇴장(레드카드) 조치합니다.",
+                "en_a": "The referee stops play and awards a direct free kick.\nIf the referee decides that the handball offence: stopped a promising attack – the goalkeeper is cautioned (yellow card); denied the opposing team an obvious goal-scoring opportunity – the goalkeeper is sent off (red card).",
+                "key_point": "페널티 에어리어 밖에서 골키퍼는 일반 선수와 동일한 핸드볼 규칙을 적용받으며, 의도적인 핸드볼로 공격 상황을 저해하면 SPA 또는 DOGSO에 따른 징계를 받습니다."
+            },
+            {
+                "id": 29,
+                "title": "파울을 당한 상황에서 발생한 시뮬레이션",
+                "ko_q": "A팀 수비수가 페널티 에어리어 밖에서 볼을 다투다 B팀 공격수의 발을 조심성 없는 태도으로 밟았습니다.\n그 후 공격수는 지면에 쓰러져 무릎을 움켜쥐며 심각한 부상을 입은 척했습니다.\n올바른 판정은 무엇입니까?",
+                "en_q": "A defender (Team A) challenges an attacker (Team B) for the ball outside the penalty area and steps on the opponent’s foot in a careless manner.\nAfter that, the attacker falls to the ground, grabs their knee and pretends to have been seriously injured.\nWhat is the correct decision?",
+                "ko_a": "주심은 공격수가 파울을 당했으므로 B팀에게 직접 프리킥을 부여합니다.\n동시에 이 선수는 부적절한 부위를 붙잡고 파울의 심각성을 과장하며 부상을 가장했으므로, 주심은 시뮬레이션을 이유로 공격수에게 경고(옐로카드)를 주어야 합니다.",
+                "en_a": "The referee awards a direct free kick to Team B because the attacker was fouled.\nAt the same time, this player held the wrong part of the body, exaggerated the seriousness of the foul and feigned injury so the referee should also caution the attacker for simulation (yellow card).",
+                "key_point": "실제로 파울을 당했더라도 그 정도를 과하게 과장하거나 부상을 가장하여 주심을 속이려 한다면 반스포츠적 행위(시뮬레이션)로 처벌받을 수 있습니다."
+            },
+            {
+                "id": 30,
+                "title": "공격자의 부자연스러운 핸드볼 직후 동료가 득점한 경우",
+                "ko_q": "수비팀 선수가 볼을 걷어내려 시도했습니다.\n볼이 우연히 공격팀 선수의 팔(신체를 부자연스럽게 크게 만든 위치의 팔)에 맞았습니다.\n그 후 볼이 다른 공격수에게 연결되어 득점을 기록했습니다.\n올바른 판정은 무엇입니까?",
+                "en_q": "A defending team player tries to kick the ball out.\nThe ball accidentally hits the arm of an attacking team player (the arm has made their body unnaturally bigger).\nAfter that, the ball goes to another attacker who scores a goal.\nWhat is the correct decision?",
+                "ko_a": "팔이 공격수의 신체를 부자연스럽게 크게 만들었으므로 핸드볼 반칙입니다.\n주심은 득점을 취소하고 수비팀에게 직접 프리킥을 부여합니다.",
+                "en_a": "It is a handball offence because the arm made the attacker's body unnaturally bigger.\nThe referee disallows the goal and awards a direct free kick to the defending team.",
+                "key_point": "본인의 득점이 아니더라도, 공격자의 핸드볼(부자연스러운 확대 포함) 이후 팀 동료가 즉시 득점한다면 이는 반칙으로 간주되어 득점이 인정되지 않습니다."
+            },
+            {
+                "id": 31,
+                "title": "백패스를 받기 위해 골키퍼가 다이빙하여 손으로 잡은 경우",
+                "ko_q": "수비수가 자신의 골키퍼(동료)에게 의도적으로 볼을 패스했습니다.\n볼이 킥된 후 상대팀 공격수 또한 볼을 향해 달려갔고, 골키퍼는 지면으로 다이빙하여 자신의 페널티 에어리어 안에서 볼을 잡았습니다.\n올바른 판정은 무엇입니까?",
+                "en_q": "A defender deliberately passes the ball to a goalkeeper (a team-mate).\nAfter the ball has been kicked, an attacker of the opposing team also runs towards the ball so the goalkeeper goes to the ground and catches the ball in their own penalty area.\nWhat is the correct decision?",
+                "ko_a": "주심은 플레이를 중단시키고 공격팀에게 간접 프리킥을 부여합니다.\n골키퍼에게 별도의 징계 조치는 내리지 않습니다.",
+                "en_a": "The referee stops play and awards an indirect free kick to the attacking team.\nThere is no disciplinary sanction for the goalkeeper.",
+                "key_point": "동료 선수가 의도적으로 골키퍼에게 킥한 볼을 골키퍼가 페널티 에어리어 안에서 손으로 잡으면 간접 프리킥으로 처벌됩니다."
+            },
+            {
+                "id": 32,
+                "title": "수비수의 헤더가 공격자의 팔에 맞고 굴절되어 동료가 득점한 경우",
+                "ko_q": "공격팀 선수가 상대 골문을 향해 볼을 킥했습니다.\n수비팀 선수가 자신의 페널티 에어리어 안에서 헤더로 볼을 걷어냈고, 볼이 우연히 공격자의 팔에 맞았습니다.\n그 직후 볼이 다른 공격수에게 연결되어 득점을 기록했습니다.\n올바른 판정은 무엇입니까?",
+                "en_q": "An attacking team player kicks the ball towards the opponents’ goal.\nA defending team player heads the ball in their own penalty area and the ball accidentally hits the arm of the attacker.\nImmediately after that, the ball goes to another attacker who scores a goal.\nWhat is the correct decision?",
+                "ko_a": "득점이 기록되기 직전 동료 선수의 우연한 핸드볼은 반칙이 아닙니다.\n팔이 신체를 부자연스럽게 크게 만들지 않았다면 주심은 득점을 인정합니다.",
+                "en_a": "Accidental handball by a team-mate immediately before a goal is scored is not an offence.\nThe referee awards the goal provided that the arm has not made the body unnaturally bigger.",
+                "key_point": "개정된 규칙에 따라, 득점자 본인이 아닌 팀 동료의 '우연한' 핸드볼 이후 즉시 득점이 된 경우에는 더 이상 반칙으로 보지 않습니다."
+            },
+            {
+                "id": 33,
+                "title": "골키퍼가 페널티 에어리어 경계선에서 볼을 잡을 때의 기준",
+                "ko_q": "공격수가 상대 페널티 에어리어로 향하는 롱볼을 쫓아갑니다.\n골키퍼가 발은 페널티 에어리어 안에 둔 채 볼을 잡았으나, 손과 볼은 에어리어 밖에 있었습니다.\n올바른 판정은 무엇입니까?",
+                "en_q": "An attacking player chases a long ball that is going towards the opponents’ penalty area.\nThe goalkeeper catches the ball when their feet are inside the penalty area but the hands and the ball are outside.\nWhat is the correct decision?",
+                "ko_a": "손과 볼의 접촉 지점이 페널티 에어리어 밖이었으므로 골키퍼는 핸드볼 반칙을 범한 것입니다 (골키퍼의 발 위치는 상관없음).\n주심은 플레이를 중단시키고 공격팀에게 직접 프리킥을 부여합니다.\n이 반칙이 명백한 득점 기회를 저지했다면 골키퍼를 퇴장(레드카드)시키고, 유망한 공격을 저지했다면 경고(옐로카드)를 줍니다.",
+                "en_a": "The goalkeeper committed a handball offence because the point of contact between the hands and the ball was outside the penalty area (the position of the goalkeeper’s feet is irrelevant).\nThe referee stops play and awards a direct free kick to the attacking team.\nThe goalkeeper is sent off (red card) if the offence denied an obvious goal-scoring opportunity; if it stopped a promising attack, the goalkeeper is cautioned (yellow card).",
+                "key_point": "핸드볼 반칙 여부는 선수의 위치가 아닌 '볼과 손의 접촉 지점'이 경계선 밖에 있는지를 기준으로 판단합니다."
+            },
+            {
+                "id": 34,
+                "title": "먼저 발생한 접촉 없는 방해와 이후의 무모한 밀기 반칙 처리",
+                "ko_q": "수비형 미드필더가 볼이 어느 선수에게도 플레이 가능한 거리 내에 있지 않을 때, 공격수의 진로를 막기 위해 그 경로로 움직였습니다 (신체 접촉은 없음).\n그 후 공격수는 위치를 차지하려다 미드필더를 무모한 태도로 밀었습니다.\n올바른 판정은 무엇입니까?",
+                "en_q": "A defensive midfielder moves into the attacker’s path to block their way when the ball is not within playing distance of either player (no contact is made).\nAfter that, the attacker tries to win a position and pushes the midfielder in a reckless manner.\nWhat is the correct decision?",
+                "ko_a": "주심은 플레이를 중단시키고 신체 접촉 없이 상대의 진행을 방해한 미드필더 팀의 반칙으로 간접 프리킥을 부여합니다.\n이 반칙이 공격수의 반칙보다 먼저 발생했으므로 이를 기준으로 처벌합니다.\n그럼에도 불구하고, 무모하게 민 공격수에게는 경고(옐로카드)를 주어야 합니다.",
+                "en_a": "The referee stops play and awards an indirect free kick against the midfielder’s team for impeding the progress of an opponent without contact.\nThis offence is penalised because it occurred before the attacker's offence.\nNevertheless, the attacker is cautioned (yellow card) for the reckless push.",
+                "key_point": "동시에 여러 반칙이 발생하지 않고 순차적으로 발생했다면 먼저 일어난 반칙으로 재개하지만, 이후에 발생한 반칙의 징계 사유(무모함 등)도 반드시 처벌해야 합니다."
+            },
+            {
+                "id": 35,
+                "title": "동료의 실수에 의한 핸드볼 직후 유망한 득점 기회가 생긴 경우",
+                "ko_q": "공격수가 우연히 손/팔로 볼을 터치한 후 동료에게 패스했고, 그 동료에게 즉시 명백한 득점 기회가 생겼습니다.\n주심의 판정은 무엇입니까?",
+                "en_q": "An attacking player accidentally touches the ball with their hand/arm and then passes the ball to the team-mate who immediately has a clear goal-scoring opportunity.\nWhat is the referee’s decision?",
+                "ko_a": "득점 기회를 만드는 과정에서 발생한 동료의 우연한 핸드볼은 (의도적이거나 팔이 신체를 부자연스럽게 크게 만든 것이 아니라면) 핸드볼 반칙이 아니므로 주심은 플레이를 계속하도록 허용합니다.",
+                "en_a": "Accidental handball by a team-mate creating a goal-scoring opportunity is not a handball offence (unless it was deliberate or the hand/arm has made the body unnaturally bigger) so the referee will allow play to continue.",
+                "key_point": "득점자 본인이 아닌 팀 동료의 우연한 핸드볼로 인해 득점 기회가 만들어지는 것은 더 이상 반칙으로 처벌하지 않습니다."
+            },
+            {
+                "id": 36,
+                "title": "공격자의 핸드볼 이후 동료가 즉시 득점한 경우",
+                "ko_q": "볼이 공격 선수의 손에 닿았습니다.\n그 선수는 볼을 컨트롤하지 못했으나, 그의 동료 선수가 즉시 소유권을 얻어 득점을 기록했습니다.\n주심의 판정은 무엇입니까?",
+                "en_q": "The ball touches the hand of an attacking player.\nHe/she does not gain control of the ball, however, his/her team-mate immediately gains possession of the ball and scores a goal.\nWhat is the referee’s decision?",
+                "ko_a": "득점자의 동료 선수가 범한 우연한 핸드볼은 (의도적이거나 신체를 부자연스럽게 확대하지 않았다면) 핸드볼 반칙이 아니므로 주심은 득점을 인정합니다.",
+                "en_a": "Accidental handball by a team-mate of the scorer is not a handball offence (unless it was deliberate or the hand/arm has made the body unnaturally bigger) so the referee will award the goal.",
+                "key_point": "공격팀 동료의 우연한 핸드볼 직후에 발생한 득점은 규정 위반이 아니며 정당한 골로 인정됩니다."
+            },
+            {
+                "id": 37,
+                "title": "실수 혹은 굴절된 핸드볼 이후 패스를 거쳐 득점한 경우",
+                "ko_q": "공격수가 우연히 손/팔로 볼을 터치했고(신체를 부자연스럽게 확대하지 않음), 동료에게 패스한 뒤 그 동료가 즉시 다시 공격수에게 패스하여 득점이 되었습니다.\n올바른 판정은 무엇입니까?",
+                "en_q": "An attacker accidentally touches the ball with their hand/arm (it has not made their body unnaturally bigger) and then passes the ball to a team-mate who immediately passes the ball back to the attacker who scores.\nWhat is the correct decision?",
+                "ko_a": "이는 핸드볼 반칙이 아닙니다. 주심은 득점을 인정합니다.",
+                "en_a": "This is not a handball offence. The referee will award the goal.",
+                "key_point": "핸드볼 접촉 직후 '직접' 득점이 되거나 '즉시' 득점 상황이 전개된 것이 아니라면, 우연한 접촉은 반칙으로 보지 않습니다."
+            },
+            {
+                "id": 38,
+                "title": "자신의 킥이 자신의 팔에 맞은 경우의 핸드볼 여부",
+                "ko_q": "수비 선수가 볼을 킥했는데, 그 볼이 자신의 페널티 에어리어 안에서 우연히 자신의 팔에 맞았습니다.\n올바른 판정은 무엇입니까?",
+                "en_q": "A defending player kicks the ball which then accidentally touches their arm inside the penalty area.\nWhat is the correct decision?",
+                "ko_a": "선수가 자신의 신체 다른 부위로 의도적으로 플레이한 결과로 볼이 자신의 팔에 닿은 것이므로 핸드볼 반칙이 아닙니다.\n주심은 플레이를 계속하도록 허용합니다.",
+                "en_a": "It is not a handball offence as the contact is a consequence of the player deliberately playing the ball with another part of the body (against himself/herself).\nThe referee will allow play to continue.",
+                "key_point": "본인이 의도적으로 플레이한 볼이 자신의 팔에 맞은 경우는 핸드볼 반칙의 예외 상황에 해당합니다."
+            },
+            {
+                "id": 39,
+                "title": "핸드볼을 피하려는 정상적인 동작 중 볼이 팔에 맞은 경우",
+                "ko_q": "공격 선수가 킥한 볼이 가까이에 있던 수비 선수의 팔에 맞았습니다.\n수비수는 팔을 몸 옆에 밀착하고 있었으며, 볼과의 접촉을 피하기 위해 팔을 몸쪽으로 움직였습니다.\n올바른 판정은 무엇입니까?",
+                "en_q": "An attacking player kicks the ball and it touches an arm of a defending player who is close.\nThe arm was kept close to the side of the body and the player moved their arm into the body to avoid contact with the ball.\nWhat is the correct decision?",
+                "ko_a": "이는 핸드볼 반칙이 아닙니다. 주심은 플레이를 계속하도록 허용합니다.",
+                "en_a": "It is not a handball offence. The referee will allow play to continue.",
+                "key_point": "팔이 몸에 밀착되어 신체를 부자연스럽게 확대하지 않았으며, 오히려 피하려는 동작 중에 맞은 것은 반칙이 아닙니다."
+            },
+            {
+                "id": 40,
+                "title": "공격자가 실수로 핸드볼을 한 직후 직접 득점한 경우",
+                "ko_q": "공격수가 롱패스를 받아 우연히 손/팔로 볼을 터치한 뒤 즉시 득점을 기록했습니다.\n손/팔이 신체를 부자연스럽게 크게 만들지는 않았습니다.\n올바른 판정은 무엇입니까?",
+                "en_q": "An attacking player receives a long pass, accidentally touches the ball with their hand/arm and immediately scores a goal.\nThe hand/arm has not made their body unnaturally bigger.\nWhat is the correct decision?",
+                "ko_a": "이는 핸드볼 반칙입니다.\n경기규칙 제12조는 득점자 본인의 손/팔에 볼이 닿은 직후에는 비록 그것이 우연일지라도 득점하는 것을 허용하지 않으므로, 주심은 수비팀에게 직접 프리킥을 부여합니다.",
+                "en_a": "It is a handball offence.\nThe referee will award a direct free kick to the defending team as Law 12 does not allow a goal to be scored immediately after contact with the hand/arm of the scorer (even if accidental) regardless of the position of the hand/arm.",
+                "key_point": "득점자 본인의 경우, 우연한 핸드볼일지라도 그 직후 즉시 득점이 이루어졌다면 반드시 반칙으로 처벌됩니다."
+            },
+            {
+                "id": 41,
+                "title": "슬라이딩 태클 중 확장된 팔의 볼 터치 판정",
+                "ko_q": "공격수(A팀)가 볼을 패스하려고 시도합니다.\n수비수(B팀)가 패스를 차단하기 위해 슬라이딩 태클을 합니다.\n볼이 신체를 지탱하지 않고 몸에서 명백하게 확장된 오른팔에 터치됩니다.\n올바른 판정은 무엇입니까?",
+                "en_q": "An attacker (Team A) attempts to pass the ball.\nA defender (Team B) makes a slide tackle to block the pass.\nThe ball touches the right arm which is clearly extended away from the body and is not supporting the body.\nWhat is the correct decision?",
+                "ko_a": "핸드볼 반칙입니다.\n선수의 팔 위치가 해당 상황에서의 신체 움직임에 의한 결과가 아니거나 정당화될 수 없을 때, 신체를 부자연스럽게 크게 만든 것으로 간주됩니다.\n주심은 A팀에게 직접 프리킥(또는 페널티킥)을 부여합니다.",
+                "en_a": "It is a handball offence.\nA player is considered to have made their body unnaturally bigger when the position of their arm is not a consequence of, or justifiable by, the player's body movement for that specific situation.\nThe referee will award a direct free kick (or penalty kick) to Team A.",
+                "key_point": "경기규칙 제12조에 따르면 선수가 손이나 팔을 사용하여 자신의 신체를 부자연스럽게 크게 만들었을 때 핸드볼 반칙이 적용됩니다."
+            },
+            {
+                "id": 42,
+                "title": "VAR 리뷰를 통한 시뮬레이션 판정 및 사후 조치",
+                "ko_q": "주심이 공격수가 상대 페널티 에어리어에서 넘어졌고 수비수에게 파울을 당했다고 판단하여 플레이를 중단시키고 페널티킥을 부여합니다.\n주심이 온필드리뷰를 실시한 결과 리플레이 영상에서 공격수가 파울을 당한 척한 것이 명확히 드러났습니다(수비수는 공격수와 접촉하지 않았음).\n주심의 판정은 무엇입니까?",
+                "en_q": "The referee stops play and awards a penalty kick because an attacker falls down in the opponents’ penalty area and the referee thinks the attacker was fouled by a defender.\nThe referee undertakes an on-field review and the replay footage clearly shows that the attacker pretends to have been fouled – the defender did not touch the attacker.\nWhat is the referee’s decision?",
+                "ko_a": "페널티킥은 취소되고 수비팀에게 간접 프리킥이 부여됩니다.\n공격수는 반스포츠적 행위(시뮬레이션)로 경고(옐로카드)를 받습니다.",
+                "en_a": "The penalty kick is cancelled and an indirect free kick is awarded to the defending team.\nThe attacker is cautioned (yellow card) for unsporting behaviour (simulation).",
+                "key_point": "VAR 프로토콜에 따라 주심은 '명확하고 명백한 실수'가 있을 때 판정을 번복할 수 있으며, 시뮬레이션은 반스포츠적 행위로 경고 대상입니다."
+            },
+            {
+                "id": 43,
+                "title": "유망한 공격을 지속하기 위한 의도적 핸드볼",
+                "ko_q": "공격팀 선수가 볼 소유권을 유지하고 상대 진영에서 유망한 공격을 계속하기 위해 의도적으로 손으로 볼을 터치합니다.\n올바른 판정은 무엇입니까?",
+                "en_q": "An attacking team player deliberately touches the ball with their hand to retain possession of the ball and continue a promising attack in the opponents’ half of the field.\nWhat is the correct decision?",
+                "ko_a": "주심은 플레이를 중단시키고 핸드볼 반칙으로 상대팀에게 직접 프리킥을 부여합니다.\n해당 선수는 반스포츠적 행위로 경고(옐로카드)를 받을 수 있지만, 이는 필수 사항은 아닙니다.",
+                "en_a": "The referee stops play and awards a direct free kick to the opposing team for a handball offence.\nThe player may be cautioned (yellow card) for unsporting behaviour but it is not mandatory.",
+                "key_point": "경기규칙 제12조에 따르면 의도적인 핸드볼은 직접 프리킥의 대상이며, 유망한 공격을 방해하는 핸드볼은 상황에 따라 경고 조치될 수 있습니다."
+            },
+            {
+                "id": 44,
+                "title": "동료의 스로인을 처리하려던 골키퍼의 핸드볼 여부",
+                "ko_q": "선수가 스로인을 실시하여 골키퍼(동료 선수)에게 볼을 던집니다.\n골키퍼가 볼을 킥하려고 명확하게 시도했으나 볼을 인플레이로 방출하는 데 실패합니다.\n그 후, 볼이 페널티 에어리어 안에서 골키퍼의 손에 우연히 터치됩니다.\n올바른 판정은 무엇입니까?",
+                "en_q": "A player takes a throw-in and throws the ball towards a goalkeeper (a team-mate).\nThe goalkeeper clearly attempts to kick the ball but fails to release it into play.\nAfter that, the ball accidentally touches the goalkeeper’s hand inside their penalty area.\nWhat is the correct decision?",
+                "ko_a": "주심은 플레이를 계속하도록 허용합니다.\n골키퍼가 볼을 인플레이로 킥하려고 명확히 시도했을 때는 볼을 손으로 다루려는 의도가 없음을 보여주므로, 만약 '클리어링' 시도가 실패했다면 골키퍼는 볼을 손으로 다룰 수 있습니다.",
+                "en_a": "The referee allows play to continue.\nWhen the goalkeeper clearly tries to kick the ball into play, this shows no intention to handle the ball, so if the ‘clearance’ attempt is unsuccessful, the goalkeeper can handle the ball.",
+                "key_point": "경기규칙 제12조에 따르면 골키퍼가 플레이 상황으로 연결하기 위해 명백히 볼을 찼거나 차려고 시도한 경우에는 동료의 백패스나 스로인 이후에도 손으로 볼을 터치하는 것이 허용될 수 있습니다."
+            },
+            {
+                "id": 45,
+                "title": "넘어지는 과정에서 발생한 수비수의 우발적 핸드볼",
+                "ko_q": "수비수가 페널티 에어리어 밖에서 공격수로부터 정당하게 도전을 받습니다.\n갑자기 수비수가 잔디에 미끄러져 넘어지면서 우연히 손으로 볼을 터치합니다.\n올바른 판정은 무엇입니까?",
+                "en_q": "A defender is fairly challenged by an attacker outside the defender’s penalty area.\nSuddenly, the defender slips on the grass, falls down and accidentally touches the ball with their hand.\nWhat is the correct decision?",
+                "ko_a": "볼과의 접촉이 해당 플레이 상황의 일부로서 선수의 자연스러운 움직임의 결과였으므로 주심은 플레이를 계속하도록 허용합니다.",
+                "en_a": "The referee allows play to continue as the contact with the ball was the result of the player's natural movement as part of that playing situation.",
+                "key_point": "핸드볼 판정 시 선수의 팔 위치가 해당 상황에서의 신체 움직임에 의한 결과이거나 그 움직임으로 정당화될 수 있다면 반칙으로 간주하지 않습니다."
+            },
+            {
+                "id": 46,
+                "title": "동료가 걷어낸 볼이 예기치 않게 팔에 맞은 경우",
+                "ko_q": "수비수가 볼을 밖으로 킥해 내려 시도합니다.\n볼이 페널티 에어리어 안에 가까이 서 있던 다른 수비수의 팔에 맞았으며, 해당 수비수는 동료로부터 볼이 올 것을 예상하지 못했습니다.\n올바른 판정은 무엇입니까?",
+                "en_q": "A defender tries to kick the ball out.\nThe ball hits the arm of another defender who is standing close in their penalty area and does not expect the ball to come from a team-mate.\nWhat is the correct decision?",
+                "ko_a": "주심은 플레이를 계속하도록 허용합니다.\n이는 핸드볼 반칙이 아닙니다.\n해당 수비수는 (팔이 몸에 가까웠든 이미 확장되어 있었든 상관없이) 자신의 신체를 부자연스럽게 크게 만든 것으로 간주되지 않습니다.",
+                "en_a": "The referee allows play to continue.\nIt is not a handball offence – the defender is not considered to have made their body unnaturally bigger (whether or not the arm was close to the body or already extended).",
+                "key_point": "선수가 볼을 플레이한 후 볼이 직접 자신의 손이나 팔에 닿거나 근처에 있던 동료가 플레이한 볼에 닿는 경우, 일반적으로 핸드볼 반칙을 적용하지 않습니다."
+            },
+            {
+                "id": 47,
+                "title": "페널티 에어리어 밖에서 득점을 막기 위한 골키퍼의 의도적 핸드볼",
+                "ko_q": "골키퍼(A팀)가 페널티 에어리어를 벗어나 골문을 향해 일대일로 달려오는 공격수(B팀)에게 접근합니다.\n공격수가 볼을 로빙 슛으로 넘기려 하자 골키퍼가 득점을 막기 위해 페널티 에어리어 밖에서 볼을 잡습니다.\n올바른 판정은 무엇입니까?",
+                "en_q": "A goalkeeper (Team A) leaves the penalty area and approaches an attacker (Team B) who is running one-on-one towards the goal.\nThe attacker tries to lob the ball over the opponent so the goalkeeper catches the ball outside their penalty area to prevent a goal from being scored.\nWhat is the correct decision?",
+                "ko_a": "주심은 B팀에게 직접 프리킥을 부여합니다.\n주심이 해당 핸드볼 반칙이 상대팀의 득점 또는 명백한 득점 기회를 저지했다고 판단하면 골키퍼는 퇴장(레드카드) 조치됩니다.",
+                "en_a": "The referee awards a direct free kick to Team B.\nThe goalkeeper is sent off (red card) if the referee judges that the handball offence denied the opposing team a goal or an obvious goal-scoring opportunity.",
+                "key_point": "경기규칙 제12조에 따르면 선수가 의도적인 핸드볼 반칙으로 상대팀의 명백한 득점 기회를 저지(DOGSO)한 경우, 위치에 상관없이 퇴장시켜야 합니다."
+            },
+            {
+                "id": 48,
+                "title": "접촉 없는 위험한 플레이로 인한 명백한 득점 기회 방해",
+                "ko_q": "공격수(A팀)가 비어 있는 골문에서 4m 떨어진 곳에서 헤더 득점을 위해 점프합니다.\n직전에 수비수(B팀)가 볼을 플레이하려 시도하며 발을 머리 높이까지 들어 올려 볼을 걷어냅니다.\n수비수가 상대와 접촉하지는 않았으나, 이 행동은 공격수가 부상의 두려움으로 볼을 플레이하는 것을 방해했습니다.\n올바른 판정은 무엇입니까?",
+                "en_q": "An attacker (Team A) jumps to score a goal with the head, being four metres away from the empty goal.\nJust before that, a defender (Team B) tries to play the ball, raises their leg to the head level and kicks the ball away.\nThe defender does not touch the opponent, however, this action prevents the attacker from playing the ball for fear of injury.\nWhat is the correct decision?",
+                "ko_a": "수비수가 위험한 태도로 플레이하였으므로 주심은 간접 프리킥을 부여합니다.\n주심이 이 반칙으로 인해 공격수의 명백한 득점 기회가 저지되었다고 판단하면 수비수는 퇴장(레드카드) 조치됩니다.",
+                "en_a": "The defender played in a dangerous manner and the referee awards an indirect free kick.\nIf the referee decides that this offence denied the attacker an obvious goal-scoring opportunity, the defender is sent off (red card).",
+                "key_point": "위험한 태도로 플레이하는 것은 간접 프리킥 대상이며, 이로 인해 상대의 명백한 득점 기회를 저지했다면 퇴장 처벌이 가능합니다."
+            },
+            {
+                "id": 49,
+                "title": "골키퍼를 향하지 않은 의도적 패스가 골키퍼에게 전달된 경우",
+                "ko_q": "선수(A팀)가 동료에게 백패스를 했으나 동료가 터치하지 못했습니다.\n결과적으로 볼은 공격수(B팀)의 압박을 받고 있던 A팀 골키퍼에게 향했고 골키퍼가 자신의 페널티 에어리어 안에서 볼을 잡았습니다.\n올바른 판정은 무엇입니까?",
+                "en_q": "A player (Team A) passes the ball back to a team-mate who does not touch it.\nAs a result, the ball goes to Team A's goalkeeper who picks up the ball in their own penalty area, being under pressure from an attacker (Team B).\nWhat is the correct decision?",
+                "ko_a": "주심은 플레이를 계속하도록 허용합니다.\n볼이 원래 골키퍼에게 전달될 의도가 아니었으므로 골키퍼에게 의도적으로 킥한 것으로 간주되지 않아 골키퍼가 볼을 손으로 다루는 것이 허용됩니다.",
+                "en_a": "The referee allows play to continue.\nThe goalkeeper was allowed to handle the ball because it was not a deliberate kick to the goalkeeper as the ball was not originally intended to go to the goalkeeper.",
+                "key_point": "경기규칙 제12조는 동료 선수가 '의도적으로' 골키퍼에게 킥한 볼을 골키퍼가 손으로 다루는 것을 금지하지만, 원래 의도가 골키퍼가 아니었다면 허용될 수 있습니다."
+            },
+            {
+                "id": 50,
+                "title": "볼 보호 과정에서 발생한 신체 가격",
+                "ko_q": "공격수(A팀)가 볼을 가지고 상대 페널티 에어리어로 달려갑니다.\n수비수(B팀)가 도전하여 반칙 없이 볼 소유권을 얻습니다.\n그 후, 수비수가 (플레이 가능 거리 내에 있는) 볼을 보호하려 시도하며 팔을 펴서 팔꿈치로 공격수의 얼굴을 가격합니다.\n올바른 판정은 무엇입니까?",
+                "en_q": "An attacker (Team A) runs with the ball into the opponents’ penalty area.\nA defender (Team B) challenges the attacker and gains possession of the ball without committing any offence.\nAfter that, the defender tries to shield the ball (which is within playing distance), extends their arms and strikes the attacker on the face with the elbow.\nWhat is the correct decision?",
+                "ko_a": "주심은 A팀에게 페널티킥을 부여합니다.\n처벌은 반칙의 심각성에 따라 달라집니다.\n수비수가: 무모한 태도로 행동했다면 - 경고(옐로카드); 난폭한 행위를 범했다면 - 퇴장(레드카드) 조치됩니다.",
+                "en_a": "The referee awards a penalty kick to Team A.\nThe sanction depends on the severity of the offence.\nIf the defender: was guilty of acting in a reckless manner – caution (yellow card); was guilty of violent conduct – sending-off (red card).",
+                "key_point": "경기규칙 제12조에 따르면 상대의 머리나 얼굴을 손이나 팔로 의도적으로 가격하는 행위는 무시할 만한 힘이 아닌 한 난폭한 행위로 간주됩니다."
+            },
+            {
+                "id": 51,
+                "title": "페널티 에어리어 밖 패스 차단을 위한 핸드볼과 DOGSO 판정",
+                "ko_q": "두 명의 공격수(B팀)가 골문을 향해 달려오자 골키퍼(A팀)가 페널티 에어리어를 벗어납니다.\n한 공격수가 오프사이드 위치에 있지 않은 동료에게 볼을 패스하려 시도합니다.\n골키퍼가 의도적으로 손/팔로 볼을 터치하여 패스를 가로챕니다.\n올바른 판정은 무엇입니까?",
+                "en_q": "The goalkeeper (Team A) leaves their penalty area because two attacking players (Team B) are running towards the goalkeeper’s goal.\nOne attacking player tries to pass the ball to a team-mate who is not in an offside position.\nThe goalkeeper deliberately touches the ball with their hand/arm and intercepts the pass.\nWhat is the correct decision?",
+                "ko_a": "주심은 B팀에게 직접 프리킥을 부여합니다.\n주심이 해당 핸드볼이 상대팀의 명백한 득점 기회를 저지했다고 판단하면 골키퍼는 퇴장(레드카드) 조치됩니다.",
+                "en_a": "The referee awards a direct free kick to Team B.\nThe goalkeeper is sent off (red card) if the referee judges that the handball denied the opposing team an obvious goal-scoring opportunity.",
+                "key_point": "득점 또는 명백한 득점 기회를 저지(DOGSO)하기 위한 의도적 핸드볼은 반칙 위치에 관계없이 퇴장 사유입니다."
+            },
+            {
+                "id": 52,
+                "title": "페널티 에어리어 내에서 발생한 깨물기 반칙",
+                "ko_q": "인플레이 상황에서 수비수(A팀)가 페널티 에어리어 안에서 공격수(B팀)를 깨뭅니다.\n주심의 판정은 무엇입니까?",
+                "en_q": "A defending player (Team A) bites an attacking player (Team B) inside the penalty area when the ball is in play.\nWhat is the referee’s decision?",
+                "ko_a": "주심은 플레이를 중단시키고 B팀에게 페널티킥을 부여합니다.\n수비수(A팀)는 반드시 퇴장(레드카드) 조치되어야 합니다.",
+                "en_a": "The referee stops play and awards a penalty kick to Team B.\nThe defending player (Team A) must be sent off (red card).",
+                "key_point": "다른 사람을 깨물거나 침을 뱉는 행위는 직접 프리킥(또는 페널티킥) 사유이자 즉각적인 퇴장 반칙입니다."
+            },
+            {
+                "id": 53,
+                "title": "유망한 공격 저지를 위한 홀딩 반칙",
+                "ko_q": "수비수(A팀)가 터치라인 부근, 골문에서 30m 떨어진 지점에서 상대 공격수(B팀)의 유니폼을 잡아당겨 유망한 공격을 저지합니다.\n주심이 플레이를 중단시킵니다.\n올바른 판정은 무엇입니까?",
+                "en_q": "A defender (Team A) pulls an opposing attacker’s shirt (Team B) and stops a promising attack 30 metres from the goal, close to the touchline.\nThe referee stops play.\nWhat is the correct decision?",
+                "ko_a": "주심은 B팀에게 직접 프리킥을 부여합니다.\n수비수는 반스포츠적 행위로 경고(옐로카드)를 받습니다.",
+                "en_a": "The referee awards a direct free kick to Team B.\nThe defender is cautioned (yellow card) for unsporting behaviour.",
+                "key_point": "상대 선수를 잡아당기거나 밀어서 유망한 공격을 방해하는 행위는 직접 프리킥과 함께 반스포츠적 행위로 경고 조치됩니다."
+            },
+            {
+                "id": 54,
+                "title": "경기장 중앙에서의 시뮬레이션",
+                "ko_q": "선수가 경기장 중앙에서 넘어져 파울을 당한 척합니다(시뮬레이션).\n볼은 경기장 안에 남아 있으며 주심이 플레이를 중단시킵니다.\n올바른 판정은 무엇입니까?",
+                "en_q": "A player falls to the ground in the middle of the field and pretends to have been fouled (simulation).\nThe ball remains on the field and the referee stops play.\nWhat is the correct decision?",
+                "ko_a": "해당 선수는 반스포츠적 행위로 경고(옐로카드)를 받으며, 상대팀에게 간접 프리킥이 부여됩니다.",
+                "en_a": "The player is cautioned (yellow card) for unsporting behaviour and an indirect free kick is awarded to the opposing team.",
+                "key_point": "주심을 속이려는 시도(시뮬레이션)는 반스포츠적 행위로 경고 대상이며, 신체 접촉 없는 반칙이므로 간접 프리킥으로 재개합니다."
+            },
+            {
+                "id": 55,
+                "title": "골키퍼가 컨트롤 중인 볼에 대한 공격수의 도전",
+                "ko_q": "공격수(A팀)가 볼이 B팀 골키퍼의 손과 지면 사이에 있을 때(B팀 골 에어리어 안) 볼을 킥합니다.\n올바른 판정은 무엇입니까?",
+                "en_q": "An attacker (Team A) kicks the ball when it is between Team B goalkeeper’s hand and the ground (inside Team B’s goal area).\nWhat is the correct decision?",
+                "ko_a": "골키퍼가 볼을 컨트롤하고 있는 것으로 간주되므로 도전할 수 없습니다.\n주심은 골 에어리어 내 어느 지점에서든 실시할 수 있는 직접 프리킥을 B팀에게 부여합니다.\n징계 조치는 해당 도전이 조심성 없었는지(징계 없음/주의), 무모했는지(경고/옐로카드), 또는 과도한 힘을 사용했는지(퇴장/레드카드)에 따라 결정됩니다.",
+                "en_a": "The goalkeeper is considered to be in control of the ball so cannot be challenged.\nThe referee awards a direct free kick to Team B to be taken from anywhere in the goal area.\nAny disciplinary sanction will depend whether the challenge was careless (no sanction/warning), reckless (caution/yellow card) or using excessive force (sending-off/red card).",
+                "key_point": "골키퍼가 손과 지면 사이 등에 볼을 두고 컨트롤할 때 상대 선수는 도전할 수 없으며, 이를 위반할 경우 직접 프리킥으로 처벌합니다."
+            },
+            {
+                "id": 56,
+                "title": "무단 입장한 선수의 방해로 인한 DOGSO 발생 시 조치",
+                "ko_q": "선수(A팀)가 필요한 주심의 허락 없이 경기장에 입장하여, A팀 페널티 에어리어에서 플레이 또는 상대를 방해하고 상대팀의 명백한 득점 기회를 저지합니다.\n플레이는 어떻게 재개됩니까?\n징계는 무엇입니까?",
+                "en_q": "A player (Team A) enters the field of play without the required referee’s permission, interferes with play or an opponent in Team’s A penalty area and denies the opposing team an obvious goal-scoring opportunity.\nHow is play restarted?\nWhat is the sanction?",
+                "ko_a": "페널티킥이 부여되며 해당 선수는 퇴장(레드카드) 조치됩니다.",
+                "en_a": "A penalty kick will be awarded and the player sent off (red card, RC).",
+                "key_point": "허락 없이 입장한 선수가 자신의 페널티 에어리어 내에서 방해를 일으켜 명백한 득점 기회를 저지한 경우, 페널티킥과 함께 퇴장 처벌을 내립니다."
+            },
+            {
+                "id": 57,
+                "title": "페널티 에어리어 안에서 시작되어 밖까지 이어진 홀딩 반칙",
+                "ko_q": "수비수(A팀)가 페널티 에어리어 안에서 공격수(B팀)를 붙잡기 시작했고, 공격수가 벗어나려 하며 페널티 에어리어를 나갈 때까지 붙잡기를 계속합니다.\n공격수는 페널티 에어리어 밖에서 그라운드에 넘어집니다.\n올바른 판정은 무엇입니까?",
+                "en_q": "A defender (Team A) starts holding an attacker (Team B) inside the penalty area and continues holding when the attacker tries to get free and leaves the penalty area.\nThe attacker falls to the ground outside the penalty area.\nWhat is the correct decision?",
+                "ko_a": "주심은 페널티 에어리어 안에서 발생한 홀딩 반칙에 대해 페널티킥을 부여합니다.",
+                "en_a": "The referee awards a penalty kick for the holding offence inside the penalty area.",
+                "key_point": "수비자가 상대 선수를 페널티 에어리어 밖에서 붙잡기 시작하여 안까지 계속하거나 그 반대의 경우, 주심은 더 심한 처벌을 위해 페널티킥을 부여할 수 있습니다."
+            },
+            {
+                "id": 58,
+                "title": "무단 입장 후 무모한 태클을 범한 경우",
+                "ko_q": "선수가 필요한 허락 없이 경기장에 입장한 후 무모한 태클을 범합니다.\n올바른 판정은 무엇입니까?",
+                "en_q": "A player enters the field of play without the required permission and then commits a reckless tackle.\nWhat is the correct decision?",
+                "ko_a": "해당 선수는 각 반칙(주심의 허락 없는 입장 및 무모한 태클)에 대해 각각 경고(옐로카드)를 받으며, 결과적으로 퇴장(레드카드) 조치됩니다.\n두 가지 별개의 경고성 반칙이 매우 짧은 간격으로 발생하더라도 각각 두 장의 옐로카드가 주어져야 합니다.\n플레이는 직접 프리킥(또는 페널티킥)으로 재개됩니다.",
+                "en_a": "The player receives a caution (yellow card, YC) for each offence (entering without the referee’s permission and the reckless tackle) and therefore is sent off (red card, RC).\nWhere two separate YC offences are committed, even in close proximity, they should result in two YCs.\nPlay is restarted with a direct free kick (or penalty kick).",
+                "key_point": "서로 다른 두 가지 경고성 반칙이 거의 동시에 발생하더라도 각각의 경고를 합산하여 퇴장 조치하며, 신체 접촉이 있는 반칙 지점에서 직접 프리킥으로 재개합니다."
+            },
+            {
+                "id": 59,
+                "title": "골키퍼가 방출한 볼을 다른 선수의 터치 없이 다시 잡은 경우",
+                "ko_q": "공격수(A팀)가 슈팅을 합니다.\n골키퍼(B팀)가 볼을 잡은 후 지면에 내려놓습니다.\n그 후 공격수가 볼을 향해 달려오자 골키퍼가 다시 볼을 집어 듭니다.\n올바른 판정은 무엇입니까?",
+                "en_q": "An attacker (Team A) takes a shot on goal.\nA goalkeeper (Team B) catches the ball and then places it on the ground.\nAfter that, the attacker runs towards the ball and the goalkeeper picks it up.\nWhat is the correct decision?",
+                "ko_a": "골키퍼가 페널티 에어리어 안에서 볼을 방출한 후 다른 선수의 터치 전에 다시 손/팔로 볼을 터치하면 A팀에게 간접 프리킥이 부여됩니다.\n추가적인 징계 조치는 없습니다.",
+                "en_a": "An indirect free kick is awarded to Team A if a goalkeeper, inside their penalty area, touches the ball with the hand/arm after releasing it and before it has touched another player.\nThere is no disciplinary sanction.",
+                "key_point": "경기규칙 제12조에 따라 골키퍼가 볼을 방출한 후 다른 선수가 터치하기 전에는 다시 손으로 다룰 수 없으며, 이를 위반 시 간접 프리킥이 선언됩니다."
+            },
+            {
+                "id": 60,
+                "title": "상대 슈팅이 굴절되어 온 볼을 잡은 골키퍼",
+                "ko_q": "동료 선수가 상대의 슈팅을 차단한 후, 골키퍼가 자신의 페널티 에어리어 안에서 그 볼을 잡습니다.\n이것이 상대팀의 간접 프리킥으로 처벌됩니까?",
+                "en_q": "A goalkeeper catches the ball in their penalty area after his/her team-mate blocked a shot from an opponent.\nIs this penalised with an indirect free kick to the opposing team?",
+                "ko_a": "아니요, 볼이 동료에 의해 골키퍼에게 의도적으로 킥 된 것이 아니므로 주심은 플레이를 계속하도록 허용합니다.",
+                "en_a": "No, the referee allows play to continue because the ball was not deliberately kicked to the goalkeeper by a team-mate.",
+                "key_point": "동료 선수가 의도적으로 킥한 백패스가 아닌, 슈팅 차단 과정에서의 굴절이나 의도치 않은 접촉 후의 볼은 골키퍼가 손으로 잡을 수 있습니다."
+            },
+            {
+                "id": 61,
+                "title": "어깨 부위의 볼 터치에 대한 핸드볼 적용 기준",
+                "ko_q": "선수가 자신의 어깨로 볼을 터치합니다.\n주심의 판정은 무엇입니까?",
+                "en_q": "A player touches the ball with their shoulder.\nWhat is the referee’s decision?",
+                "ko_a": "이는 핸드볼 반칙이 아닙니다.\n핸드볼 반칙을 결정하기 위한 목적으로, 어깨와 팔의 경계는 겨드랑이 밑 부분과 일직선을 이루는 선으로 정의됩니다.",
+                "en_a": "This is not a handball offence.\nFor the purposes of determining handball offences, the boundary between the shoulder and the arm is defined as the bottom of the armpit.",
+                "key_point": "경기규칙 제11조와 12조에 따르면 오프사이드와 핸드볼 판단 시 팔의 위쪽 경계는 겨드랑이 최하단부로 규정하며 어깨 터치는 허용됩니다."
+            },
+            {
+                "id": 63,
+                "title": "페널티 에어리어 내 홀딩 반칙의 성립 요건",
+                "ko_q": "인플레이 상황에서 수비팀 선수가 페널티 에어리어 안에서 공격팀 선수를 붙잡습니다.\n주심에 의해 처벌됩니까?",
+                "en_q": "A defending team player holds an attacking team player inside the penalty area when the ball is in play.\nIs it penalised by the referee?",
+                "ko_a": "용어 사전의 정의에 따르면, 홀딩 반칙은 선수가 상대방의 신체나 장비에 접촉하여 상대의 움직임을 방해했을 때에만 발생합니다.",
+                "en_a": "According to the definition in the Glossary, a holding offence occurs only when a player’s contact with an opponent’s body or equipment impedes the opponent’s movement.",
+                "key_point": "단순한 접촉만으로는 반칙이 아니며, 상대의 움직임을 실질적으로 지연시키거나 막는 '지연(Impede)' 요소가 있어야 홀딩 반칙으로 처벌합니다."
+            },
+            {
+                "id": 64,
+                "title": "골킥 후 재차 터치로 상대의 명백한 득점 기회를 저지한 골키퍼 처벌",
+                "ko_q": "골키퍼가 골킥을 실시합니다.\n볼이 인플레이가 된 후, 골키퍼가 자신의 페널티 에어리어 안에서 (다른 선수가 터치하기 전에) 볼을 손으로 다루어 상대팀의 명백한 득점 기회를 저지합니다.\n주심의 판정은 무엇입니까?",
+                "en_q": "A goalkeeper takes a goal kick.\nAfter the ball is in play, the goalkeeper handles the ball inside their penalty area (before it touches another player) and denies the opposing team an obvious goal-scoring opportunity.\nWhat is the referee’s decision?",
+                "ko_a": "상대팀에게 간접 프리킥이 부여됩니다.\n골키퍼가 경기 재개 시 의도적으로 볼을 두 번 플레이하여 명백한 득점 기회를 저지했다면, 비록 손/팔을 사용한 터치였더라도 골키퍼는 반드시 퇴장(레드카드) 조치되어야 합니다.",
+                "en_a": "An indirect free kick is awarded to the opposing team.\nIf the goalkeeper deliberately plays the ball a second time at a restart and denies an obvious goal-scoring opportunity, the goalkeeper must be sent off (red card, RC) even if the touch is with the hand/arm.",
+                "key_point": "골키퍼가 자신의 페널티 에어리어 내에서 재개 후 재차 터치(핸드볼 포함)로 상대의 득점 기회를 방해하면 DOGSO 규정에 따라 퇴장 처벌을 받습니다."
+            },
+            {
+                "id": 65,
+                "title": "무단 입장 후 유망한 공격을 저지한 선수에 대한 복합 징계",
+                "ko_q": "선수가 허락 없이 경기장에 입장하여 (파울을 범하지는 않았으나) 볼을 킥함으로써 유망한 공격을 저지했습니다.\n주심의 판정은 무엇입니까?",
+                "en_q": "A player entered the field of play without a permission and stopped a promising attack by kicking the ball (but not committing a foul).\nWhat is the referee's decision?",
+                "ko_a": "방해가 발생한 지점에서 직접 프리킥으로 플레이가 재개됩니다.\n해당 선수는 두 번의 경고(옐로카드) - 하나는 불법적인 경기장 입장, 두 번째는 유망한 공격 저지 - 를 받고 퇴장(레드카드) 조치됩니다.",
+                "en_a": "Play is restarted with a direct free kick where the interference occurred.\nThe player receives two cautions (yellow cards) – one for illegally entering the field of play and the second for stopping a promising attack – and then is sent off (red card).",
+                "key_point": "주심의 허락 없는 입장과 유망한 공격 저지는 각각 독립적인 경고 사유이므로, 한 상황에서 두 가지를 모두 범했다면 두 장의 경고를 합산하여 퇴장시킵니다."
+            },
+            {
+                "id": 66,
+                "title": "물건을 던지거나 사용하여 득점을 저지한 경우",
+                "ko_q": "골키퍼가 물통의 물을 마시고 있을 때 공격수가 슈팅을 합니다.\n골키퍼가 제 위치로 돌아와 골라인에서 물통을 사용하여 볼을 쳐내고 슈팅을 세이브합니다.\n주심의 판정은 무엇입니까?",
+                "en_q": "An attacker takes a shot on goal when a goalkeeper is drinking water from a bottle.\nThe goalkeeper gets back into position and uses the bottle to parry the ball and save the shot on the goal line.\nWhat is the referee’s decision?",
+                "ko_a": "페널티킥이 선언되며 골키퍼는 상대팀의 득점을 저지한 사유로 퇴장(레드카드) 조치됩니다.",
+                "en_a": "It is a penalty kick and the goalkeeper is sent off (red card, RC) for denying the opposing team a goal.",
+                "key_point": "경기규칙 제12조에 따르면 손에 든 물체로 볼에 접촉하는 것은 핸드볼과 유사하게 직접 프리킥(또는 페널티킥) 사유가 되며, 이를 통해 득점을 막으면 퇴장 사유가 됩니다."
+            },
+            {
+                "id": 68,
+                "title": "골키퍼가 컨트롤 중인 볼에 대한 도전 가능 여부",
+                "ko_q": "골키퍼가 손과 지면 사이에 볼을 두고 컨트롤하고 있습니다.\n이 순간 다른 선수가 볼을 플레이할 수 있습니까?",
+                "en_q": "A goalkeeper is in control of the ball which is between his/her hand and the ground.\nIs another player allowed to play the ball at this moment?",
+                "ko_a": "네, 하지만 오직 동료 선수만 가능합니다.\n골키퍼가 손으로 볼을 컨트롤할 때 상대 선수는 도전할 수 없습니다.\n징계는 해당 도전이 조심성 없었는지, 무모했는지, 또는 과도한 힘을 사용했는지에 따라 결정됩니다.",
+                "en_a": "Yes, but only a team-mate.\nA goalkeeper cannot be challenged by an opponent when in control of the ball with the hand(s).\nThe sanction depends on whether the challenge is careless, reckless or excessive force.",
+                "key_point": "골키퍼가 손과 다른 표면 사이에 볼을 두고 있을 때 상대 선수는 볼을 향해 도전할 수 없으며, 이를 무시하고 도전 시 직접 프리킥으로 처벌합니다."
+            },
+            {
+                "id": 69,
+                "title": "골키퍼의 볼 방출을 방해하는 행위에 대한 처벌",
+                "ko_q": "공격수(A팀)가 골키퍼(B팀)가 손에서 볼을 방출하여 킥하려는 순간 방해하려 시도합니다.\n주심의 판정은 무엇입니까?\n징계는 무엇입니까?",
+                "en_q": "An attacking player (Team A) attempts to block the goalkeeper (Team B) when he/she is kicking the ball from his/her hands.\nWhat is the referee’s decision?\nWhat is the sanction?",
+                "ko_a": "공격수는 골키퍼가 볼을 방출하거나 인플레이로 방출하려는 시도를 방해한 이유로 간접 프리킥 처벌을 받습니다.\n이는 필수적인 경고(옐로카드) 대상 반칙은 아닙니다.",
+                "en_a": "The attacking player is penalised with an indirect free kick for preventing the goalkeeper from releasing or attempting to release the ball into play.\nThis is not a mandatory cautionable (yellow card, YC) offence.",
+                "key_point": "경기규칙 제12조에 따르면 손으로 볼을 방출하는 골키퍼를 방해하는 행위는 간접 프리킥 사유에 해당합니다."
+            },
+            {
+                "id": 70,
+                "title": "손바닥 위에 볼을 올려둔 골키퍼에 대한 상대의 도전",
+                "ko_q": "골키퍼가 펼친 손 위에 볼을 올려두고 있을 때 상대 선수가 볼을 킥하려고 시도합니다.\n재개 방법과 징계는 무엇입니까?",
+                "en_q": "The goalkeeper is holding the ball in the outstretched open hand and an opposing player attempts to kick the ball.\nWhat are the restart and the sanction?",
+                "ko_a": "골키퍼가 손으로 볼을 컨트롤할 때 상대 선수는 도전할 수 없습니다.\n플레이는 간접 프리킥(접촉이 없는 경우) 또는 직접 프리킥(접촉이 있는 경우)으로 재개됩니다.\n유망한 공격을 저지하거나 도전이 무모했다면 경고(옐로카드)를 줄 수 있습니다.",
+                "en_a": "A goalkeeper cannot be challenged by an opponent when in control of the ball with the hand(s).\nPlay restarts with an indirect free kick (no contact) or a direct free kick (contact) – the offence is a caution (yellow card, YC) if it stops a promising attack or the challenge is reckless.",
+                "key_point": "골키퍼가 펼친 손바닥에 볼을 올려두고 있는 상태도 볼을 컨트롤하는 것으로 간주되며, 이 상황에서 상대의 도전은 반칙으로 처벌됩니다."
+            }
+        ];
+
+        const qaGrid = document.getElementById('qaGrid');
+
+        function createCard(item) {
+            return `
+                <div class="qa-card bg-slate-800/60 backdrop-blur-sm border border-slate-700 rounded-lg p-5 shadow-lg shadow-black/20 transition-all duration-300 hover:border-cyan-400 hover:shadow-cyan-500/20 hover:-translate-y-1">
+                    <div class="card-content">
+                        <div class="flex items-start gap-4">
+                            <span class="text-2xl font-bold text-cyan-400">${item.id}.</span>
+                            <h3 class="text-lg font-semibold text-slate-100 flex-1">${item.title}</h3>
+                        </div>
+                        <p class="mt-4 text-slate-300 whitespace-pre-line">🤔 ${item.ko_q}</p>
+                        
+                        <button class="toggle-answer-btn mt-4 w-full bg-indigo-600 text-white font-bold py-2 px-4 rounded-md hover:bg-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:ring-opacity-75 transition-colors flex items-center justify-center gap-2">
+                            <span>판정 보기</span>
+                            <svg class="w-5 h-5 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </button>
+
+                        <div class="answer-content hidden mt-6 pt-4 border-t border-slate-600 space-y-4">
+                            <div>
+                                <h4 class="text-md font-semibold text-green-400 mb-2">✅ 판정 (Korean)</h4>
+                                <p class="text-slate-300 whitespace-pre-line">${item.ko_a}</p>
+                            </div>
+                            <div>
+                                <h4 class="text-md font-semibold text-amber-400 mb-2">💡 핵심 포인트</h4>
+                                <p class="bg-slate-900/50 p-3 rounded-md border-l-4 border-amber-400 text-slate-200">${item.key_point}</p>
+                            </div>
+                            <div class="mt-4 pt-4 border-t border-dashed border-slate-600">
+                                <h4 class="text-md font-semibold text-sky-400 mb-2">🇬🇧 International Referee Study (English)</h4>
+                                <p class="text-slate-400 italic mb-2 whitespace-pre-line">${item.en_q}</p>
+                                <p class="text-slate-300 whitespace-pre-line">${item.en_a}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+        
+        // Initial render
+        qaGrid.innerHTML = qaData.map(createCard).join('');
+        
+        // Event Listeners
+        document.addEventListener('DOMContentLoaded', () => {
+            const searchInput = document.getElementById('searchInput');
+            const searchResult = document.getElementById('searchResult');
+
+            qaGrid.addEventListener('click', (e) => {
+                const button = e.target.closest('.toggle-answer-btn');
+                if (button) {
+                    const answerContent = button.nextElementSibling;
+                    const buttonText = button.querySelector('span');
+                    const buttonIcon = button.querySelector('svg');
+
+                    const isHidden = answerContent.classList.contains('hidden');
+                    
+                    if (isHidden) {
+                        answerContent.classList.remove('hidden');
+                        buttonText.textContent = '판정 숨기기';
+                        buttonIcon.style.transform = 'rotate(180deg)';
+                    } else {
+                        answerContent.classList.add('hidden');
+                        buttonText.textContent = '판정 보기';
+                        buttonIcon.style.transform = 'rotate(0deg)';
+                    }
+                }
+            });
+
+            searchInput.addEventListener('input', () => {
+                const searchTerm = searchInput.value.toLowerCase();
+                const cards = qaGrid.querySelectorAll('.qa-card');
+                let visibleCount = 0;
+                
+                cards.forEach(card => {
+                    const content = card.querySelector('.card-content').textContent.toLowerCase();
+                    if (content.includes(searchTerm)) {
+                        card.style.display = 'block';
+                        visibleCount++;
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+
+                if (searchTerm === '') {
+                    searchResult.textContent = '';
+                } else {
+                    searchResult.textContent = `${visibleCount}개의 사례가 검색되었습니다.`;
+                }
+            });
+        });
+    </script>
+
+</body>
+</html>
